@@ -48,7 +48,7 @@ button{font-family:inherit}
 .reset:hover{color:#fff}
 
 /* dropdown */
-.dd{position:absolute;z-index:60;width:372px;display:flex;gap:10px;padding:10px;background:#fff;border:1px solid #C3CFE0;border-radius:8px;box-shadow:0 10px 28px rgba(4,32,79,.32)}
+.dd{position:absolute;z-index:60;width:400px;display:flex;gap:10px;padding:10px;background:#fff;border:1px solid #C3CFE0;border-radius:8px;box-shadow:0 10px 28px rgba(4,32,79,.32)}
 .dd[hidden]{display:none}
 .dd-l{flex:1;min-width:0}
 .dd-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px;font-size:11.5px;color:var(--navy)}
@@ -59,7 +59,7 @@ button{font-family:inherit}
 .opt .sw{width:9px;height:9px;border-radius:50%;flex:none}
 .opt .ol{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .opt .on{font-size:10px;color:var(--mut);flex:none}
-.dd-r{width:138px;text-align:center;flex:none}
+.dd-r{width:190px;text-align:center;flex:none}
 .dd-r .cap{font-size:9px;color:var(--mut);margin-top:2px}
 
 /* panel */
@@ -70,6 +70,14 @@ button{font-family:inherit}
 .mhead{height:34px;padding:5px 8px 0}
 .pills{display:flex;gap:3px;margin-top:3px}
 .pill{padding:1px 6px;font-size:8.5px;font-weight:600;color:#34435C;background:#fff;border:1px solid #C3CFE0;border-radius:9px;cursor:pointer}
+.p1mnav{display:flex;align-items:center;gap:8px;padding:0 8px;border-bottom:1px solid var(--line);background:#F7F9FC}
+.p1mnav-btn{width:20px;height:20px;flex:0 0 auto;border:1px solid #C3CFE0;background:#fff;border-radius:5px;color:var(--navy);font-size:13px;line-height:1;cursor:pointer;padding:0}
+.p1mnav-btn:hover{background:#EEF2F8}
+.p1mnav-title{flex:1;font-size:11.5px;font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.p1mnav-sub{font-weight:400;color:var(--mut);font-size:9.5px;margin-left:4px}
+.p1mdots{display:flex;gap:5px}
+.p1mdot{width:6px;height:6px;border-radius:50%;background:#C9D1DE;cursor:pointer;display:inline-block}
+.p1mdot.on{background:var(--or)}
 .pill.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 .mlegend{display:flex;gap:6px;padding:3px 8px 0;font-size:8.5px;line-height:11px;color:#34435C;overflow:hidden}
 .mlegend .mk{flex:none}
@@ -144,9 +152,9 @@ a.ph:hover{border-color:var(--or)}
 
   <section class="page" id="p1">
     <div class="panel" id="p1m" style="left:8px;top:162px;width:712px;height:380px"></div>
-    <div class="panel" id="p1map" style="left:726px;top:162px;width:206px;height:380px"></div>
-    <div class="panel" id="p1pref" style="left:938px;top:162px;width:318px;height:212px"></div>
-    <div class="panel" id="p1sus" style="left:938px;top:380px;width:318px;height:162px"></div>
+    <div class="panel" id="p1map" style="left:726px;top:162px;width:270px;height:380px"></div>
+    <div class="panel" id="p1pref" style="left:1002px;top:162px;width:254px;height:212px"></div>
+    <div class="panel" id="p1sus" style="left:1002px;top:380px;width:254px;height:162px"></div>
     <div class="panel ana" id="p1ana" style="left:8px;top:548px;width:996px;height:110px"></div>
   </section>
   <section class="page" id="p2" style="display:none">
@@ -215,7 +223,7 @@ FILTERS.forEach(f => {
   opts.sort((a, b) => (a.v === NA) - (b.v === NA));
   f.opts = opts;
 });
-const S = { page: 1, sel: {}, mapT: 'avg', p3: 0, onlyFull: true, dd: null };
+const S = { page: 1, sel: {}, mapT: 'avg', p3: 0, p1m: 0, onlyFull: true, dd: null };
 FILTERS.forEach(f => { S.sel[f.k] = new Set(f.opts.map(o => o.v)); });
 const filtered = () => DATA.filter(r => FILTERS.every(f => S.sel[f.k].has(val(r, f))));
 
@@ -274,49 +282,42 @@ function svgOpen(W, H) { return `<svg xmlns="http://www.w3.org/2000/svg" viewBox
 function emptyMsg(W, H, msg) { return `<text x="${W / 2}" y="${H / 2}" text-anchor="middle" font-size="12" fill="#7A879C">${esc(msg)}</text>`; }
 
 const avgTxt = v => { const t = fmt(v, 2); return t.includes(',') ? t.replace(/0+$/, '').replace(/,$/, '') : t; };
-function matrixSVG(recs, W, H) {
+const barSegs = (bx, bw, by, bh, st, fpTxtSz, tipFn) => {
+  const fpw = bw * st.fp / (st.fp + st.cap), cpw = bw - fpw;
+  let o = `<rect x="${bx.toFixed(2)}" y="${by.toFixed(2)}" width="${fpw.toFixed(2)}" height="${bh.toFixed(2)}" fill="${BLUE}" stroke="#fff" stroke-width=".6" data-tip="${esc(tipFn('fp'))}"/>`;
+  o += `<rect x="${(bx + fpw).toFixed(2)}" y="${by.toFixed(2)}" width="${cpw.toFixed(2)}" height="${bh.toFixed(2)}" fill="${ORANGE}" stroke="#fff" stroke-width=".6" data-tip="${esc(tipFn('cap'))}"/>`;
+  const ty = by + bh / 2 + fpTxtSz * 0.36;
+  if (fpw >= 15 && bh >= 6.5) o += `<text x="${(bx + fpw / 2).toFixed(2)}" y="${ty.toFixed(2)}" font-size="${fpTxtSz.toFixed(1)}" font-weight="600" fill="#fff" text-anchor="middle" pointer-events="none">${avgTxt(st.fp)}</text>`;
+  if (cpw >= 15 && bh >= 6.5) o += `<text x="${(bx + fpw + cpw / 2).toFixed(2)}" y="${ty.toFixed(2)}" font-size="${fpTxtSz.toFixed(1)}" font-weight="600" fill="#fff" text-anchor="middle" pointer-events="none">${avgTxt(st.cap)}</text>`;
+  return o;
+};
+function matrixCombinedSVG(recs, W, H) {
   let s = svgOpen(W, H);
-  s += `<text x="10" y="13" font-size="12" font-weight="600" fill="${NAVY}">Skoring efikasi gulma dan crop performa: herbi FP vs Capreno</text>`;
   const lx = W - 300;
   s += `<rect x="${lx}" y="3" width="11" height="11" fill="${BLUE}"/><text x="${lx + 15}" y="12" font-size="9" fill="#34435C">Farmer Practice</text>`;
   s += `<rect x="${lx + 88}" y="3" width="11" height="11" fill="${ORANGE}"/><text x="${lx + 103}" y="12" font-size="9" fill="#34435C">Capreno</text>`;
   s += `<text x="${lx + 148}" y="12" font-size="8" fill="${MUTED}">angka = rata-rata skor (1\u20134)</text>`;
   if (!recs.length) { s += emptyMsg(W, H, 'Tidak ada demo pada filter ini') + '</svg>'; return s; }
   const prods = uniqSorted(recs, r => r.fp), vars = uniqSorted(recs, r => r.var);
-  const rowsDef = [
-    { p: 'umum', title: 'Efikasi gulma umum', items: prods, key: r => r.fp },
-    { p: 'khusus', title: 'Efikasi gulma khusus', items: prods, key: r => r.fp },
-    { p: 'crop', title: 'Crop performa', items: vars, key: r => r.var },
-  ];
   const top = 18, gapY = 4, gapX = 8, titleH = 12, avgH = 15, avgGap = 3;
   const cw = (W - 16 - 2 * gapX) / 3, bandH = (H - top - 2 * gapY - 2) / 3;
   const maxRows = Math.max(prods.length, vars.length);
   const rh = Math.max(6.5, Math.min(16, (bandH - titleH - avgH - avgGap - 3) / maxRows));
   const barX = 72, labW = 66;
   const nameSz = Math.min(9.5, Math.max(6.8, rh * 0.74)), valSz = Math.min(8.5, Math.max(6.3, rh * 0.66));
-  const barSegs = (bx, bw, by, bh, st, fpTxtSz, tipFn) => {
-    const fpw = bw * st.fp / (st.fp + st.cap), cpw = bw - fpw;
-    let o = `<rect x="${bx.toFixed(2)}" y="${by.toFixed(2)}" width="${fpw.toFixed(2)}" height="${bh.toFixed(2)}" fill="${BLUE}" stroke="#fff" stroke-width=".6" data-tip="${esc(tipFn('fp'))}"/>`;
-    o += `<rect x="${(bx + fpw).toFixed(2)}" y="${by.toFixed(2)}" width="${cpw.toFixed(2)}" height="${bh.toFixed(2)}" fill="${ORANGE}" stroke="#fff" stroke-width=".6" data-tip="${esc(tipFn('cap'))}"/>`;
-    const ty = by + bh / 2 + fpTxtSz * 0.36;
-    if (fpw >= 15 && bh >= 6.5) o += `<text x="${(bx + fpw / 2).toFixed(2)}" y="${ty.toFixed(2)}" font-size="${fpTxtSz.toFixed(1)}" font-weight="600" fill="#fff" text-anchor="middle" pointer-events="none">${avgTxt(st.fp)}</text>`;
-    if (cpw >= 15 && bh >= 6.5) o += `<text x="${(bx + fpw + cpw / 2).toFixed(2)}" y="${ty.toFixed(2)}" font-size="${fpTxtSz.toFixed(1)}" font-weight="600" fill="#fff" text-anchor="middle" pointer-events="none">${avgTxt(st.cap)}</text>`;
-    return o;
-  };
-  rowsDef.forEach((rd, ri) => {
+  MATRIX_TOPICS.forEach((rd, ri) => {
+    const items = rd.p === 'crop' ? vars : prods, key = rd.p === 'crop' ? (r => r.var) : (r => r.fp);
     for (let t = 0; t < 3; t++) {
       const x = 8 + t * (cw + gapX), y = top + ri * (bandH + gapY);
       s += `<text x="${x + 2}" y="${y + 9}" font-size="9" font-weight="600" fill="${NAVY}">${rd.title} FP vs Capreno ${T[t]}</text>`;
       const bx = x + barX, bw = cw - barX - 2;
-      // bar rerata (seluruh demo terpilih)
       const all = statP(recs, rd.p, t), ay = y + titleH;
       s += `<text x="${x + 2}" y="${(ay + avgH / 2 + 3).toFixed(2)}" font-size="8.5" font-weight="700" fill="#1D2B44">rerata</text>`;
       s += `<text x="${x + labW}" y="${(ay + avgH / 2 + 3).toFixed(2)}" font-size="8.5" font-weight="700" fill="${MUTED}" text-anchor="end">${all.n || ''}</text>`;
       if (all.n) s += barSegs(bx, bw, ay, avgH, all, 9.5, side => `Rerata seluruh demo terpilih \u00B7 ${PLABEL[rd.p]} \u00B7 ${T[t]}\n${side === 'fp' ? 'Farmer Practice' : 'Capreno'}: rata-rata skor ${fmt(side === 'fp' ? all.fp : all.cap)}\nn = ${all.n} demo`);
       else s += `<text x="${(bx + bw / 2).toFixed(2)}" y="${(ay + avgH / 2 + 3).toFixed(2)}" font-size="8" fill="#B4BECE" text-anchor="middle">\u2013</text>`;
-      // baris per produk / varietas, urut dari skor FP tertinggi
-      const rows = rd.items.map(it => { const sub = recs.filter(r => rd.key(r) === it); return { it, sub, st: statP(sub, rd.p, t) }; })
-        .sort((a, b) => (b.st.n ? b.st.fp : -1) - (a.st.n ? a.st.fp : -1) || a.it.localeCompare(b.it, 'id'));
+      const rows = items.map(it => { const sub = recs.filter(r => key(r) === it); return { it, sub, st: statP(sub, rd.p, t) }; })
+        .sort((a, b) => a.it.localeCompare(b.it, 'id'));
       const ry0 = ay + avgH + avgGap, rowsH = rows.length * rh;
       s += `<rect x="${bx}" y="${ry0.toFixed(2)}" width="${bw.toFixed(2)}" height="${rowsH.toFixed(2)}" fill="none" stroke="#DCE3EE"/>`;
       [0.25, 0.5, 0.75].forEach(g => { s += `<line x1="${(bx + bw * g).toFixed(2)}" x2="${(bx + bw * g).toFixed(2)}" y1="${ry0.toFixed(2)}" y2="${(ry0 + rowsH).toFixed(2)}" stroke="#E6EBF3"/>`; });
@@ -330,6 +331,63 @@ function matrixSVG(recs, W, H) {
       });
     }
   });
+  return s + '</svg>';
+}
+const MATRIX_TOPICS = [
+  { p: 'umum', title: 'Efikasi gulma umum' },
+  { p: 'khusus', title: 'Efikasi gulma khusus' },
+  { p: 'crop', title: 'Crop performa' },
+];
+const MATRIX_VIEWS = [...MATRIX_TOPICS, { p: 'all', title: 'Gabungan 3 topik' }];
+function matrixPanelHTML(recs, W, H) {
+  const ri = S.p1m || 0, view = MATRIX_VIEWS[ri], navH = 22;
+  const dots = MATRIX_VIEWS.map((m, i) => `<i class="p1mdot${i === ri ? ' on' : ''}" data-p1mgo="${i}" title="${m.title}"></i>`).join('');
+  const nav = `<div class="p1mnav" style="height:${navH}px">
+    <button class="p1mnav-btn" data-p1m="-1" aria-label="Tampilan sebelumnya">\u2039</button>
+    <div class="p1mnav-title">${view.title} <span class="p1mnav-sub">FP vs Capreno \u00B7 ${ri + 1}/${MATRIX_VIEWS.length}</span></div>
+    <div class="p1mdots">${dots}</div>
+    <button class="p1mnav-btn" data-p1m="1" aria-label="Tampilan berikutnya">\u203A</button>
+  </div>`;
+  return nav + (ri < MATRIX_TOPICS.length ? matrixSVG(recs, W, H - navH, ri) : matrixCombinedSVG(recs, W, H - navH));
+}
+function matrixSVG(recs, W, H, ri) {
+  const rd = MATRIX_TOPICS[ri];
+  let s = svgOpen(W, H);
+  const lx = W - 300;
+  s += `<rect x="${lx}" y="3" width="11" height="11" fill="${BLUE}"/><text x="${lx + 15}" y="12" font-size="9" fill="#34435C">Farmer Practice</text>`;
+  s += `<rect x="${lx + 88}" y="3" width="11" height="11" fill="${ORANGE}"/><text x="${lx + 103}" y="12" font-size="9" fill="#34435C">Capreno</text>`;
+  s += `<text x="${lx + 148}" y="12" font-size="8" fill="${MUTED}">angka = rata-rata skor (1\u20134)</text>`;
+  if (!recs.length) { s += emptyMsg(W, H, 'Tidak ada demo pada filter ini') + '</svg>'; return s; }
+  const prods = uniqSorted(recs, r => r.fp), vars = uniqSorted(recs, r => r.var);
+  const items = rd.p === 'crop' ? vars : prods, key = rd.p === 'crop' ? (r => r.var) : (r => r.fp);
+  const top = 18, gapX = 8, titleH = 13, avgH = 20, avgGap = 4;
+  const cw = (W - 16 - 2 * gapX) / 3, bandH = H - top - 2;
+  const rh = Math.max(9, Math.min(26, (bandH - titleH - avgH - avgGap - 4) / Math.max(1, items.length)));
+  const barX = 72, labW = 66;
+  const nameSz = Math.min(12, Math.max(8, rh * 0.5)), valSz = Math.min(10.5, Math.max(7.5, rh * 0.42));
+  for (let t = 0; t < 3; t++) {
+    const x = 8 + t * (cw + gapX), y = top;
+    s += `<text x="${x + 2}" y="${y + 9}" font-size="10.5" font-weight="600" fill="${NAVY}">${T[t]}</text>`;
+    const bx = x + barX, bw = cw - barX - 2;
+    const all = statP(recs, rd.p, t), ay = y + titleH;
+    s += `<text x="${x + 2}" y="${(ay + avgH / 2 + 3).toFixed(2)}" font-size="9.5" font-weight="700" fill="#1D2B44">rerata</text>`;
+    s += `<text x="${x + labW}" y="${(ay + avgH / 2 + 3).toFixed(2)}" font-size="9.5" font-weight="700" fill="${MUTED}" text-anchor="end">${all.n || ''}</text>`;
+    if (all.n) s += barSegs(bx, bw, ay, avgH, all, 10.5, side => `Rerata seluruh demo terpilih \u00B7 ${PLABEL[rd.p]} \u00B7 ${T[t]}\n${side === 'fp' ? 'Farmer Practice' : 'Capreno'}: rata-rata skor ${fmt(side === 'fp' ? all.fp : all.cap)}\nn = ${all.n} demo`);
+    else s += `<text x="${(bx + bw / 2).toFixed(2)}" y="${(ay + avgH / 2 + 3).toFixed(2)}" font-size="9" fill="#B4BECE" text-anchor="middle">\u2013</text>`;
+    const rows = items.map(it => { const sub = recs.filter(r => key(r) === it); return { it, sub, st: statP(sub, rd.p, t) }; })
+      .sort((a, b) => a.it.localeCompare(b.it, 'id'));
+    const ry0 = ay + avgH + avgGap, rowsH = rows.length * rh;
+    s += `<rect x="${bx}" y="${ry0.toFixed(2)}" width="${bw.toFixed(2)}" height="${rowsH.toFixed(2)}" fill="none" stroke="#DCE3EE"/>`;
+    [0.25, 0.5, 0.75].forEach(g => { s += `<line x1="${(bx + bw * g).toFixed(2)}" x2="${(bx + bw * g).toFixed(2)}" y1="${ry0.toFixed(2)}" y2="${(ry0 + rowsH).toFixed(2)}" stroke="#E6EBF3"/>`; });
+    rows.forEach((row, j) => {
+      const ry = ry0 + j * rh, bh = Math.max(6, rh - 3), by = ry + (rh - bh) / 2, st = row.st;
+      s += `<text x="${x + 2}" y="${(ry + rh / 2 + nameSz * 0.35).toFixed(2)}" font-size="${nameSz.toFixed(1)}" fill="#1D2B44">${esc(row.it)}</text>`;
+      s += `<text x="${x + labW}" y="${(ry + rh / 2 + nameSz * 0.35).toFixed(2)}" font-size="${nameSz.toFixed(1)}" font-weight="700" fill="${MUTED}" text-anchor="end">${row.sub.length}</text>`;
+      if (!st.n) return;
+      const dist = side => { const { c: cc } = counts(row.sub, rd.p, t, side); return [1, 2, 3, 4].map(v => `skor ${v}: ${cc[v]}`).join(', '); };
+      s += barSegs(bx, bw, by, bh, st, valSz, side => `${row.it} \u00B7 ${T[t]} \u00B7 ${PLABEL[rd.p]}\n${side === 'fp' ? 'Farmer Practice' : 'Capreno'}: rata-rata skor ${fmt(side === 'fp' ? st.fp : st.cap)}\nSebaran demo: ${dist(side)}\nn = ${st.n} demo`);
+    });
+  }
   return s + '</svg>';
 }
 
@@ -389,8 +447,7 @@ const wlCol = v => v == null ? GC.n : (Math.round(v * 100) > 0 ? GC.g : (Math.ro
 function mapVal(r, p) { return S.mapT === 'avg' ? wlAvg(r, p) : wlOf(r, p, +S.mapT); }
 const mapTLabel = () => S.mapT === 'avg' ? 'Rata-rata 7\u201321 HSA' : T[+S.mapT];
 
-function mapSVG(W, H) {
-  const sel = new Set(filtered().map(r => r.id));
+function mapGeom(W, H) {
   const mL = 30, mT = 4, mR = 8, mB = 12;
   const pw = W - mL - mR, ph = H - mT - mB;
   const lats = DATA.map(r => r.lat), lons = DATA.map(r => r.lon);
@@ -398,6 +455,11 @@ function mapSVG(W, H) {
   const k = Math.min(pw / (lon1 - lon0), ph / (lat1 - lat0));
   const gw = (lon1 - lon0) * k, gh = (lat1 - lat0) * k;
   const ox = mL + (pw - gw) / 2, oy = mT + (ph - gh) / 2;
+  return { lat0, lat1, lon0, lon1, ox, oy, gw, gh, k };
+}
+function mapSVG(W, H) {
+  const sel = new Set(filtered().map(r => r.id));
+  const { lat0, lat1, lon0, lon1, ox, oy, gw, gh, k } = mapGeom(W, H);
   const X = lo => ox + (lo - lon0) * k, Y = la => oy + (lat1 - la) * k;
   let s = svgOpen(W, H);
   s += `<rect x="${ox.toFixed(1)}" y="${oy.toFixed(1)}" width="${gw.toFixed(1)}" height="${gh.toFixed(1)}" fill="#F5F8FC" stroke="#C9D4E4"/>`;
@@ -477,7 +539,8 @@ function mapPanelHTML(W, H, legendH) {
     .map(([k, l]) => `<button class="pill${S.mapT === k ? ' on' : ''}" data-map="${k}">${l}</button>`).join('');
   const key = `<svg class="mk" viewBox="0 0 30 26" width="30" height="26"><path d="M4 6L15 22" stroke="#B8C1CF" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M4 6L26 6" stroke="#B8C1CF" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M26 6L15 22" stroke="#B8C1CF" stroke-width="3" stroke-linecap="round" fill="none"/></svg>`;
   const legend = `<div class="mlegend" style="height:${legendH}px">${key}<div><div>Sisi kiri = gulma umum, atas = gulma khusus, kanan = crop performa.</div><div><i class="dot" style="background:${GC.g}"></i>WL &gt; 0 Capreno unggul <i class="dot" style="background:${GC.y}"></i>0 imbang <i class="dot" style="background:${GC.r}"></i>&lt; 0 FP unggul <i class="dot" style="background:${GC.n}"></i>tanpa data</div></div></div>`;
-  return `<div class="mhead"><span class="pt">Sebaran demo dan win-lose</span><div class="pills">${pills}</div></div>${mapSVG(W, H - 34 - legendH)}${legend}`;
+  const mapH = H - 34 - legendH;
+  return `<div class="mhead"><span class="pt">Sebaran demo dan win-lose</span><div class="pills">${pills}</div></div>${mapSVG(W, mapH)}${legend}`;
 }
 
 /* ============ page 2: win-lose ============ */
@@ -727,8 +790,8 @@ function pieSVG(opts, total, size) {
   return out + '</svg>';
 }
 function ddHTML(f) {
-  const rows = f.opts.map((o, i) => `<label class="opt"><input type="checkbox" data-i="${i}" ${S.sel[f.k].has(o.v) ? 'checked' : ''}><i class="sw" style="background:${PIE[i % PIE.length]}"></i><span class="ol" title="${esc(o.v)}">${esc(o.v)}</span><span class="on">${o.n} \u00B7 ${Math.round(o.n / DATA.length * 100)}%</span></label>`).join('');
-  return `<div class="dd-l"><div class="dd-h"><b>${esc(f.label)}</b><span><a data-a="all">Pilih semua</a><a data-a="none">Kosongkan</a></span></div><div class="dd-list">${rows}</div></div><div class="dd-r">${pieSVG(f.opts, DATA.length, 138)}<div class="cap">Komposisi total, n = ${DATA.length} demo</div></div>`;
+  const rows = f.opts.map((o, i) => `<label class="opt"><input type="checkbox" data-i="${i}" ${S.sel[f.k].has(o.v) ? 'checked' : ''}><i class="sw" style="background:${PIE[i % PIE.length]}"></i><span class="ol" title="${esc(o.v)}">${esc(o.v)}</span></label>`).join('');
+  return `<div class="dd-l"><div class="dd-h"><b>${esc(f.label)}</b><span><a data-a="all">Pilih semua</a><a data-a="none">Kosongkan</a></span></div><div class="dd-list">${rows}</div></div><div class="dd-r">${pieSVG(f.opts, DATA.length, 190)}<div class="cap">Komposisi total, n = ${DATA.length} demo</div></div>`;
 }
 function buildFilters() {
   $('filters').innerHTML = FILTERS.map(f => `<button class="fbtn" data-k="${f.k}"><span class="fl">${esc(f.short)}</span><span class="fc" hidden></span><svg width="9" height="6" viewBox="0 0 9 6"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></button>`).join('') + '<button class="reset" id="reset">Atur ulang filter</button>';
@@ -747,7 +810,7 @@ function openDD(k) {
   S.dd = k; const f = FILTERS.find(x => x.k === k);
   dd.innerHTML = ddHTML(f); dd.hidden = false;
   const b = document.querySelector(`.fbtn[data-k="${k}"]`);
-  dd.style.left = Math.max(6, Math.min(b.offsetLeft + $('filters').offsetLeft, 1264 - 372)) + 'px';
+  dd.style.left = Math.max(6, Math.min(b.offsetLeft + $('filters').offsetLeft, 1264 - 400)) + 'px';
   dd.style.top = ($('filters').offsetTop + b.offsetTop + b.offsetHeight + 4) + 'px';
   updateFilterBtns();
 }
@@ -755,7 +818,7 @@ function closeDD() { S.dd = null; const dd = $('dd'); dd.hidden = true; updateFi
 
 /* ============ render ============ */
 function renderMaps() {
-  if (S.page === 1) $('p1map').innerHTML = mapPanelHTML(206, 380, 50);
+  if (S.page === 1) $('p1map').innerHTML = mapPanelHTML(270, 380, 50);
   if (S.page === 2) $('p2map').innerHTML = mapPanelHTML(322, 380, 34);
 }
 function render() {
@@ -766,9 +829,9 @@ function render() {
   ['p1', 'p2', 'p3'].forEach(id => { $(id).style.display = id === 'p' + S.page ? 'block' : 'none'; });
   updateFilterBtns();
   if (S.page === 1) {
-    $('p1m').innerHTML = matrixSVG(recs, 712, 380);
-    $('p1pref').innerHTML = prefSVG(recs, 318, 212);
-    $('p1sus').innerHTML = susSVG(recs, 318, 162);
+    $('p1m').innerHTML = matrixPanelHTML(recs, 712, 380);
+    $('p1pref').innerHTML = prefSVG(recs, 254, 212);
+    $('p1sus').innerHTML = susSVG(recs, 254, 162);
     $('p1ana').innerHTML = anaHTML('Analisis data', analysis1(recs), recs.length);
   } else if (S.page === 2) {
     $('p2wl').innerHTML = wlSVG(recs, 552, 380);
@@ -816,6 +879,8 @@ function init() {
     const fb = t.closest('.fbtn'); if (fb) { openDD(fb.dataset.k); return; }
     if (t.closest('#reset')) { FILTERS.forEach(f => { S.sel[f.k] = new Set(f.opts.map(o => o.v)); }); S.p3 = 0; if (S.dd) { const f = FILTERS.find(x => x.k === S.dd); $('dd').innerHTML = ddHTML(f); } render(); return; }
     const pill = t.closest('.pill'); if (pill) { S.mapT = pill.dataset.map; renderMaps(); return; }
+    const p1mBtn = t.closest('[data-p1m]'); if (p1mBtn) { S.p1m = (S.p1m + (+p1mBtn.dataset.p1m) + MATRIX_VIEWS.length) % MATRIX_VIEWS.length; render(); return; }
+    const p1mDot = t.closest('[data-p1mgo]'); if (p1mDot) { S.p1m = +p1mDot.dataset.p1mgo; render(); return; }
     const pg = t.closest('[data-pg]'); if (pg && !pg.disabled) { S.p3 += +pg.dataset.pg; render(); return; }
     const a = t.closest('.dd [data-a]');
     if (a) { const f = FILTERS.find(x => x.k === S.dd); S.sel[f.k] = a.dataset.a === 'all' ? new Set(f.opts.map(o => o.v)) : new Set(); $('dd').querySelectorAll('input[type=checkbox]').forEach(cb => { cb.checked = a.dataset.a === 'all'; }); S.p3 = 0; render(); return; }

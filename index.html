@@ -97,12 +97,27 @@ button{font-family:inherit}
 .tag{flex:none;width:46px;padding:2px 0;text-align:center;font-size:9px;font-weight:700;color:#fff;border-radius:3px}
 .tag.c{background:var(--or)}
 .tag.f{background:var(--blue)}
-.ph{position:relative;display:flex;align-items:center;justify-content:center;flex:none;width:118px;height:72px;overflow:hidden;background:#EEF2F8;border:1px dashed #B9C5D8;border-radius:4px;text-decoration:none}
+.ph{position:relative;display:flex;align-items:center;justify-content:center;flex:none;width:166px;height:72px;overflow:hidden;background:#EEF2F8;border:1px dashed #B9C5D8;border-radius:4px;text-decoration:none;cursor:zoom-in}
 .ph .phi{font-size:9px;line-height:11px;text-align:center;color:#7A879C}
-.ph.none{border-style:solid;border-color:#E1E7F0}
+.ph.none{border-style:solid;border-color:#E1E7F0;cursor:default}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
 .ph img.ok{opacity:1}
 a.ph:hover{border-color:var(--or)}
+.pm{position:absolute;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;background:rgba(10,26,58,.66)}
+.pm[hidden]{display:none}
+.pm-box{width:820px;max-width:92%;background:#fff;border-radius:10px;padding:14px 16px 16px;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.pm-h{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.pm-h b{font-size:14px;color:var(--navy)}
+.pm-h .mut{flex:1;color:var(--mut);font-size:11px}
+.pm-x{flex:none;width:26px;height:26px;padding:0;border:none;background:#EEF2F8;border-radius:5px;cursor:pointer;font-size:13px;color:var(--navy)}
+.pm-x:hover{background:#E1E7F0}
+.pm-imgs{display:flex;gap:14px}
+.pm-col{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.pm-col .tag{width:74px;flex:none}
+.pm-img{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:300px;overflow:hidden;background:#EEF2F8;border:1px solid #E1E7F0;border-radius:6px}
+.pm-img img{width:100%;height:100%;object-fit:cover}
+.pm-img.none{color:#7A879C;font-size:11px}
+.pm-link{font-size:10.5px;color:var(--blue);text-decoration:underline}
 .pager{position:absolute;left:0;right:0;bottom:0;height:28px;display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:10.5px;background:#F8FAFD;border-top:1px solid #E1E7F0}
 .pager button{padding:2px 9px;font-size:10.5px;font-weight:600;color:var(--navy);background:#fff;border:1px solid #C3CFE0;border-radius:5px;cursor:pointer}
 .pager button:disabled{opacity:.4;cursor:default}
@@ -147,6 +162,7 @@ a.ph:hover{border-color:var(--or)}
 
   <div id="foot">Sumber: Demo_SS1, 21 demo komersial. Skor 1–4 (4 terbaik). WL = skor Capreno − skor herbi FP. Peta memakai koordinat demo tanpa peta dasar.</div>
   <div id="dd" class="dd" hidden></div>
+  <div id="pm" class="pm" hidden></div>
   <div id="tip"></div>
 </div>
 </div>
@@ -566,17 +582,30 @@ function commentOf(r) {
 function photoCell(r, h) {
   const f = r.foto[h];
   const one = (id, who, cls) => `<div class="pr"><span class="tag ${cls}">${who}</span>${id
-    ? `<a class="ph" href="https://drive.google.com/file/d/${id}/view" target="_blank" rel="noopener"><span class="phi">Buka foto<br>di Drive</span><img alt="" loading="lazy" src="https://drive.google.com/thumbnail?id=${id}&amp;sz=w400"></a>`
+    ? `<a class="ph" data-rid="${esc(r.id)}" data-h="${h}" href="https://drive.google.com/file/d/${id}/view" target="_blank" rel="noopener"><span class="phi">Buka foto<br>di Drive</span><img alt="" loading="lazy" src="https://drive.google.com/thumbnail?id=${id}&amp;sz=w400"></a>`
     : `<span class="ph none"><span class="phi">Tidak ada<br>foto</span></span>`}</div>`;
   return one(f.cap, 'Capreno', 'c') + one(f.fp, 'FP', 'f');
 }
+const HLABEL = { h7: '7 HSA', h14: '14 HSA', h21: '21 HSA' };
+function photoModalHTML(r, h) {
+  const f = r.foto[h];
+  const col = (id, who, cls) => `<div class="pm-col"><span class="tag ${cls}">${who}</span>${id
+    ? `<a class="pm-img" href="https://drive.google.com/file/d/${id}/view" target="_blank" rel="noopener"><img alt="" src="https://drive.google.com/thumbnail?id=${id}&amp;sz=w1000"></a><a class="pm-link" href="https://drive.google.com/file/d/${id}/view" target="_blank" rel="noopener">Buka foto asli di Drive</a>`
+    : `<div class="pm-img none"><span>Tidak ada foto</span></div>`}</div>`;
+  return `<div class="pm-box"><div class="pm-h"><b>${esc(r.id)}</b><span class="mut">${esc(r.lokasi)} · Foto ${HLABEL[h] || h}</span><button class="pm-x" type="button" aria-label="Tutup">✕</button></div><div class="pm-imgs">${col(f.cap, 'Capreno', 'c')}${col(f.fp, 'FP', 'f')}</div></div>`;
+}
+function openPM(rid, h) {
+  const r = DATA.find(x => x.id === rid); if (!r || !r.foto[h]) return;
+  const pm = $('pm'); pm.innerHTML = photoModalHTML(r, h); pm.hidden = false;
+}
+function closePM() { const pm = $('pm'); if (pm.hidden) return; pm.hidden = true; pm.innerHTML = ''; }
 const PER_PAGE = 2;
 function p3HTML(recs) {
   const list = p3List(recs), pages = Math.max(1, Math.ceil(list.length / PER_PAGE));
   if (S.p3 >= pages) S.p3 = pages - 1;
   const rows = list.slice(S.p3 * PER_PAGE, S.p3 * PER_PAGE + PER_PAGE);
   const full = recs.filter(r => photoCount(r) === 6).length;
-  let h = `<table class="dt"><colgroup><col style="width:92px"><col style="width:168px"><col style="width:118px"><col style="width:304px"><col style="width:188px"><col style="width:188px"><col style="width:188px"></colgroup><thead><tr><th>Demo</th><th>Lokasi demo</th><th>Nama petugas</th><th>Komentar petani</th><th>Foto 7 HSA</th><th>Foto 14 HSA</th><th>Foto 21 HSA</th></tr></thead><tbody>`;
+  let h = `<table class="dt"><colgroup><col style="width:65px"><col style="width:125px"><col style="width:85px"><col style="width:264px"><col style="width:236px"><col style="width:236px"><col style="width:235px"></colgroup><thead><tr><th>Demo</th><th>Lokasi demo</th><th>Nama petugas</th><th>Komentar petani</th><th>Foto 7 HSA</th><th>Foto 14 HSA</th><th>Foto 21 HSA</th></tr></thead><tbody>`;
   if (!rows.length) h += `<tr class="emp"><td colspan="7">${recs.length ? 'Tidak ada demo dengan foto lengkap pada filter ini. Matikan opsi \u201CHanya foto lengkap\u201D untuk melihat demo lain.' : 'Tidak ada demo pada filter ini.'}</td></tr>`;
   rows.forEach(r => {
     const c = commentOf(r), pf = r.pref.h21;
@@ -780,6 +809,9 @@ function init() {
   st.addEventListener('mouseleave', () => { tip.style.display = 'none'; });
   st.addEventListener('click', e => {
     const t = e.target;
+    const ph = t.closest('.ph[data-rid]'); if (ph) { e.preventDefault(); openPM(ph.dataset.rid, ph.dataset.h); return; }
+    if (t.closest('.pm-x')) { closePM(); return; }
+    if (t.id === 'pm') { closePM(); return; }
     const tab = t.closest('.tab'); if (tab) { S.page = +tab.dataset.p; closeDD(); render(); return; }
     const fb = t.closest('.fbtn'); if (fb) { openDD(fb.dataset.k); return; }
     if (t.closest('#reset')) { FILTERS.forEach(f => { S.sel[f.k] = new Set(f.opts.map(o => o.v)); }); S.p3 = 0; if (S.dd) { const f = FILTERS.find(x => x.k === S.dd); $('dd').innerHTML = ddHTML(f); } render(); return; }
@@ -798,7 +830,7 @@ function init() {
       S.p3 = 0; render();
     }
   });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDD(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeDD(); closePM(); } });
 }
 if (typeof document !== 'undefined' && document.getElementById('stage')) init();
 

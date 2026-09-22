@@ -433,11 +433,11 @@ function susSVG(recs, W, H) {
   });
   const nf = c.fp.Iya + c.fp.Tidak, nc = c.cap.Iya + c.cap.Tidak;
   if (nf || nc) {
-    s += `<text x="10" y="122" font-size="9.5" fill="#1D2B44">Susulan: FP <tspan font-weight="700" fill="${BLUE}">${c.fp.Iya} dari ${nf}</tspan> petani \u00B7 Capreno <tspan font-weight="700" fill="${ORANGE}">${c.cap.Iya} dari ${nc}</tspan></text>`;
+    s += `<text x="10" y="118" font-size="9.5" fill="#1D2B44">Susulan: FP <tspan font-weight="700" fill="${BLUE}">${c.fp.Iya} dari ${nf}</tspan> petani \u00B7 Capreno <tspan font-weight="700" fill="${ORANGE}">${c.cap.Iya} dari ${nc}</tspan></text>`;
   }
-  s += `<text x="10" y="138" font-size="8" fill="${MUTED}">Data 60 HST baru terisi di sebagian kecil demo (n = ${Math.max(nf, nc)}).</text>`;
-  s += `<rect x="10" y="146" width="9" height="9" fill="${BLUE}"/><rect x="20" y="146" width="9" height="9" fill="#CFE0F4"/><text x="33" y="154" font-size="8" fill="${MUTED}">FP: aplikasi lagi / tidak</text>`;
-  s += `<rect x="160" y="146" width="9" height="9" fill="${ORANGE}"/><rect x="170" y="146" width="9" height="9" fill="#FBDCC3"/><text x="183" y="154" font-size="8" fill="${MUTED}">Capreno: aplikasi lagi / tidak</text>`;
+  s += `<text x="10" y="131" font-size="8" fill="${MUTED}">Data 60 HST baru terisi di sebagian kecil demo (n = ${Math.max(nf, nc)}).</text>`;
+  s += `<rect x="10" y="140" width="9" height="9" fill="${BLUE}"/><rect x="20" y="140" width="9" height="9" fill="#CFE0F4"/><text x="33" y="148" font-size="8" fill="${MUTED}">FP: aplikasi lagi / tidak</text>`;
+  s += `<rect x="10" y="151" width="9" height="9" fill="${ORANGE}"/><rect x="20" y="151" width="9" height="9" fill="#FBDCC3"/><text x="33" y="159" font-size="8" fill="${MUTED}">Capreno: aplikasi lagi / tidak</text>`;
   return s + '</svg>';
 }
 

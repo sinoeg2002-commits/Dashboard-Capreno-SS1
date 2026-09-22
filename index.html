@@ -843,7 +843,7 @@ a.ph:hover{border-color:var(--or)}
     <div class="panel ana" id="p3ana" style="left:8px;top:548px;width:996px;height:110px"></div>
   </section>
 
-  <div id="foot">Sumber: Demo_SS1, 21 demo komersial. Skor 1–4 (4 terbaik). WL = skor Capreno − skor herbi FP. Peta pakai basemap OpenStreetMap/OpenTopoMap (perlu koneksi internet); tanpa koneksi, tampil grid koordinat.</div>
+  <div id="foot">Sumber: Demo_SS1, 21 demo komersial. Skor 1–4 (4 terbaik). WL = skor Capreno − skor herbi FP. Peta pakai basemap Esri (perlu koneksi internet); tanpa koneksi, tampil grid koordinat.</div>
   <div id="dd" class="dd" hidden></div>
   <div id="pm" class="pm" hidden></div>
   <div id="tip"></div>
@@ -1613,7 +1613,7 @@ function pieSVG(opts, total, size) {
   return out + '</svg>';
 }
 function ddHTML(f) {
-  const rows = f.opts.map((o, i) => `<label class="opt"><input type="checkbox" data-i="${i}" ${S.sel[f.k].has(o.v) ? 'checked' : ''}><i class="sw" style="background:${PIE[i % PIE.length]}"></i><span class="ol" title="${esc(o.v)}">${esc(o.v)}</span></label>`).join('');
+  const rows = f.opts.map((o, i) => `<label class="opt"><input type="checkbox" data-i="${i}" ${S.sel[f.k].has(o.v) ? 'checked' : ''}><i class="sw" style="background:${PIE[i % PIE.length]}"></i><span class="ol" title="${esc(o.v)}">${esc(o.v)}</span><span class="on">${o.n}</span></label>`).join('');
   return `<div class="dd-l"><div class="dd-h"><b>${esc(f.label)}</b><span><a data-a="all">Pilih semua</a><a data-a="none">Kosongkan</a></span></div><div class="dd-list">${rows}</div></div><div class="dd-r">${pieSVG(f.opts, DATA.length, 190)}<div class="cap">Komposisi total, n = ${DATA.length} demo</div></div>`;
 }
 function buildFilters() {

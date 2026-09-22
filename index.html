@@ -223,7 +223,7 @@ FILTERS.forEach(f => {
   opts.sort((a, b) => (a.v === NA) - (b.v === NA));
   f.opts = opts;
 });
-const S = { page: 1, sel: {}, mapT: 'avg', p3: 0, p1m: 0, onlyFull: true, dd: null };
+const S = { page: 1, sel: {}, mapT: 'avg', p3: 0, p1m: 0, p2wl: 0, onlyFull: true, dd: null };
 FILTERS.forEach(f => { S.sel[f.k] = new Set(f.opts.map(o => o.v)); });
 const filtered = () => DATA.filter(r => FILTERS.every(f => S.sel[f.k].has(val(r, f))));
 
@@ -544,9 +544,57 @@ function mapPanelHTML(W, H, legendH) {
 }
 
 /* ============ page 2: win-lose ============ */
-function wlSVG(recs, W, H) {
+function wlPanelHTML(recs, W, H) {
+  const ri = S.p2wl || 0, view = MATRIX_VIEWS[ri], navH = 22;
+  const dots = MATRIX_VIEWS.map((m, i) => `<i class="p1mdot${i === ri ? ' on' : ''}" data-p2wlgo="${i}" title="${m.title}"></i>`).join('');
+  const nav = `<div class="p1mnav" style="height:${navH}px">
+    <button class="p1mnav-btn" data-p2wl="-1" aria-label="Tampilan sebelumnya">‹</button>
+    <div class="p1mnav-title">${view.title} <span class="p1mnav-sub">Win-lose · ${ri + 1}/${MATRIX_VIEWS.length}</span></div>
+    <div class="p1mdots">${dots}</div>
+    <button class="p1mnav-btn" data-p2wl="1" aria-label="Tampilan berikutnya">›</button>
+  </div>`;
+  return nav + (ri < MATRIX_TOPICS.length ? wlSVG(recs, W, H - navH, ri) : wlCombinedSVG(recs, W, H - navH));
+}
+function wlSVG(recs, W, H, ri) {
+  const rd = MATRIX_TOPICS[ri];
   let s = svgOpen(W, H);
-  s += `<text x="10" y="15" font-size="12" font-weight="600" fill="${NAVY}">Win-lose: skor Capreno dikurangi skor herbi FP</text>`;
+  if (!recs.length) { s += emptyMsg(W, H, 'Tidak ada demo pada filter ini') + '</svg>'; return s; }
+  const prods = uniqSorted(recs, r => r.fp), vars = uniqSorted(recs, r => r.var);
+  const items = rd.p === 'crop' ? vars : prods, key = rd.p === 'crop' ? (r => r.var) : (r => r.fp);
+  const top = 14, gapX = 10;
+  const cw = (W - 16 - 2 * gapX) / 3, bandH = H - top - 2;
+  const rh = Math.max(9, Math.min(20, bandH / Math.max(1, items.length)));
+  const labW = 58, barX = labW + 18;
+  const nameSz = Math.min(9.5, Math.max(7, rh * 0.5)), valSz = Math.min(8.5, Math.max(6.5, rh * 0.42));
+  for (let t = 0; t < 3; t++) {
+    const x = 8 + t * (cw + gapX), y = top;
+    s += `<text x="${x + 2}" y="${(y - 4).toFixed(2)}" font-size="9.5" font-weight="600" fill="${NAVY}">${T[t]}</text>`;
+    const bx0 = x + barX, bx1 = x + cw - 4, acx = (bx0 + bx1) / 2, halfW = (bx1 - bx0) / 2;
+    const rows = items.map(it => { const sub = recs.filter(r => key(r) === it); return { it, sub, st: statP(sub, rd.p, t) }; })
+      .sort((a, b) => a.it.localeCompare(b.it, 'id'));
+    const maxAbs = Math.max(0.5, ...rows.map(r => Math.abs(r.st.wl || 0)));
+    const sc = Math.max(1, halfW - 20) / maxAbs;
+    s += `<line x1="${acx.toFixed(2)}" x2="${acx.toFixed(2)}" y1="${y.toFixed(2)}" y2="${(y + rows.length * rh).toFixed(2)}" stroke="#DCE3EE"/>`;
+    rows.forEach((row, j) => {
+      const ry = y + j * rh, cy = ry + rh / 2, st = row.st;
+      s += `<text x="${x + 2}" y="${(cy + nameSz * 0.35).toFixed(2)}" font-size="${nameSz.toFixed(1)}" fill="#1D2B44">${esc(row.it)}</text>`;
+      s += `<text x="${(x + labW).toFixed(2)}" y="${(cy + nameSz * 0.35).toFixed(2)}" font-size="${nameSz.toFixed(1)}" font-weight="700" fill="${MUTED}" text-anchor="end">${row.sub.length}</text>`;
+      if (!st.n) { s += `<text x="${acx.toFixed(2)}" y="${(cy + 3).toFixed(2)}" font-size="8" fill="#B4BECE" text-anchor="middle">–</text>`; return; }
+      const wl = st.wl, len = Math.abs(wl) * sc, bh = Math.max(5, rh - 4), by = cy - bh / 2, bx = wl >= 0 ? acx : acx - len;
+      const tip = `${row.it} · ${T[t]} · ${PLABEL[rd.p]}\nSkor FP ${fmt(st.fp)} → Capreno ${fmt(st.cap)}\nWL rata-rata ${fmt(wl, 2, true)} (n = ${st.n} demo)`;
+      if (len > 0.6) s += `<rect x="${bx.toFixed(2)}" y="${by.toFixed(2)}" width="${len.toFixed(2)}" height="${bh.toFixed(2)}" fill="${wl > 0 ? ORANGE : BLUE}" data-tip="${esc(tip)}"/>`;
+      else s += `<rect x="${(acx - 1).toFixed(2)}" y="${by.toFixed(2)}" width="2" height="${bh.toFixed(2)}" fill="${GREY}" data-tip="${esc(tip)}"/>`;
+      if (valSz >= 6.5) {
+        const lx = wl >= 0 ? bx + len + 2 : bx - 2, anchor = wl >= 0 ? 'start' : 'end';
+        s += `<text x="${lx.toFixed(2)}" y="${(cy + valSz * 0.35).toFixed(2)}" font-size="${valSz.toFixed(1)}" font-weight="700" fill="#1D2B44" text-anchor="${anchor}" pointer-events="none">${fmt(wl, 2, true)}</text>`;
+      }
+    });
+  }
+  s += `<text x="10" y="${H - 4}" font-size="7.5" fill="${MUTED}">Oranye: Capreno unggul · biru: FP unggul · angka = jumlah demo dengan produk/varietas ini.</text>`;
+  return s + '</svg>';
+}
+function wlCombinedSVG(recs, W, H) {
+  let s = svgOpen(W, H);
   if (!recs.length) return s + emptyMsg(W, H, 'Tidak ada demo pada filter ini') + '</svg>';
   const rowsAll = [];
   ['umum', 'khusus', 'crop'].forEach(p => [0, 1, 2].forEach(t => { const st = statP(recs, p, t); rowsAll.push({ p, t, st }); }));
@@ -554,11 +602,11 @@ function wlSVG(recs, W, H) {
   const m = Math.max(1, Math.ceil(maxAbs));
   const ax0 = 106, ax1 = 326, acx = (ax0 + ax1) / 2, sc = (ax1 - ax0) / 2 / m - 12 / m;
   const bx0 = 346, bx1 = 540, bw = bx1 - bx0;
-  s += `<text x="${acx}" y="30" font-size="9.5" font-weight="600" text-anchor="middle" fill="#1D2B44">Rata-rata selisih skor (WL)</text>`;
-  s += `<text x="${ax0}" y="42" font-size="8" fill="${BLUE}">\u25C4 FP lebih baik</text><text x="${ax1}" y="42" font-size="8" fill="${ORANGE}" text-anchor="end">Capreno lebih baik \u25BA</text>`;
-  s += `<text x="${bx0 + bw / 2}" y="30" font-size="9.5" font-weight="600" text-anchor="middle" fill="#1D2B44">Sebaran hasil per demo</text>`;
-  s += `<text x="${bx0}" y="42" font-size="8" fill="${BLUE}">FP menang</text><text x="${bx0 + bw / 2}" y="42" font-size="8" fill="${MUTED}" text-anchor="middle">imbang</text><text x="${bx1}" y="42" font-size="8" fill="${ORANGE}" text-anchor="end">Capreno menang</text>`;
-  let y = 48;
+  s += `<text x="${acx}" y="15" font-size="9.5" font-weight="600" text-anchor="middle" fill="#1D2B44">Rata-rata selisih skor (WL)</text>`;
+  s += `<text x="${ax0}" y="27" font-size="8" fill="${BLUE}">\u25C4 FP lebih baik</text><text x="${ax1}" y="27" font-size="8" fill="${ORANGE}" text-anchor="end">Capreno lebih baik \u25BA</text>`;
+  s += `<text x="${bx0 + bw / 2}" y="15" font-size="9.5" font-weight="600" text-anchor="middle" fill="#1D2B44">Sebaran hasil per demo</text>`;
+  s += `<text x="${bx0}" y="27" font-size="8" fill="${BLUE}">FP menang</text><text x="${bx0 + bw / 2}" y="27" font-size="8" fill="${MUTED}" text-anchor="middle">imbang</text><text x="${bx1}" y="27" font-size="8" fill="${ORANGE}" text-anchor="end">Capreno menang</text>`;
+  let y = 33;
   const rowH = 28, grpH = 16;
   ['umum', 'khusus', 'crop'].forEach(p => {
     s += `<rect x="8" y="${y}" width="${W - 16}" height="${grpH - 2}" fill="#EDF2F9"/><text x="12" y="${y + 10}" font-size="9.5" font-weight="700" fill="${NAVY}">${PLABEL[p]}</text>`;
@@ -588,7 +636,7 @@ function wlSVG(recs, W, H) {
       y += rowH;
     }
   });
-  s += `<line x1="${acx}" x2="${acx}" y1="48" y2="${y}" stroke="#7F8CA5" stroke-width=".8"/>`;
+  s += `<line x1="${acx}" x2="${acx}" y1="33" y2="${y}" stroke="#7F8CA5" stroke-width=".8"/>`;
   for (let v = -m; v <= m; v++) { const x = acx + v * sc; s += `<line x1="${x}" x2="${x}" y1="${y}" y2="${y + 3}" stroke="#7F8CA5" stroke-width=".8"/><text x="${x}" y="${y + 12}" font-size="8" text-anchor="middle" fill="${MUTED}">${v > 0 ? '+' + v : v < 0 ? MINUS + Math.abs(v) : '0'}</text>`; }
   s += `<text x="10" y="${H - 6}" font-size="8" fill="${MUTED}">WL = skor Capreno \u2212 skor herbi FP pada parameter dan umur pengamatan yang sama (skor 1\u20134). Positif: orange, negatif: biru.</text>`;
   return s + '</svg>';
@@ -834,7 +882,7 @@ function render() {
     $('p1sus').innerHTML = susSVG(recs, 254, 162);
     $('p1ana').innerHTML = anaHTML('Analisis data', analysis1(recs), recs.length);
   } else if (S.page === 2) {
-    $('p2wl').innerHTML = wlSVG(recs, 552, 380);
+    $('p2wl').innerHTML = wlPanelHTML(recs, 552, 380);
     $('p2heat').innerHTML = heatSVG(recs, 362, 380);
     $('p2ana').innerHTML = anaHTML('Analisis data', analysis2(recs), recs.length);
   } else {
@@ -881,6 +929,8 @@ function init() {
     const pill = t.closest('.pill'); if (pill) { S.mapT = pill.dataset.map; renderMaps(); return; }
     const p1mBtn = t.closest('[data-p1m]'); if (p1mBtn) { S.p1m = (S.p1m + (+p1mBtn.dataset.p1m) + MATRIX_VIEWS.length) % MATRIX_VIEWS.length; render(); return; }
     const p1mDot = t.closest('[data-p1mgo]'); if (p1mDot) { S.p1m = +p1mDot.dataset.p1mgo; render(); return; }
+    const p2wlBtn = t.closest('[data-p2wl]'); if (p2wlBtn) { S.p2wl = (S.p2wl + (+p2wlBtn.dataset.p2wl) + MATRIX_VIEWS.length) % MATRIX_VIEWS.length; render(); return; }
+    const p2wlDot = t.closest('[data-p2wlgo]'); if (p2wlDot) { S.p2wl = +p2wlDot.dataset.p2wlgo; render(); return; }
     const pg = t.closest('[data-pg]'); if (pg && !pg.disabled) { S.p3 += +pg.dataset.pg; render(); return; }
     const a = t.closest('.dd [data-a]');
     if (a) { const f = FILTERS.find(x => x.k === S.dd); S.sel[f.k] = a.dataset.a === 'all' ? new Set(f.opts.map(o => o.v)) : new Set(); $('dd').querySelectorAll('input[type=checkbox]').forEach(cb => { cb.checked = a.dataset.a === 'all'; }); S.p3 = 0; render(); return; }

@@ -1131,8 +1131,8 @@ const mapTLabel = () => S.mapT === 'avg' ? 'Rata-rata 7\u201321 HSA' : T[+S.mapT
 
 /* ============ basemap peta (Leaflet) ============ */
 const BASEMAPS = {
-  light: { url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '\u00a9 OpenStreetMap contributors', maxZoom: 19 },
-  terrain: { url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', attribution: '\u00a9 OpenStreetMap, SRTM \u00a9 OpenTopoMap', maxZoom: 17, subdomains: 'abc' },
+  light: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', attribution: '\u00a9 Esri, HERE, Garmin, FAO, NOAA, USGS, OpenStreetMap contributors', maxZoom: 18 },
+  terrain: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Terrain_Base/MapServer/tile/{z}/{y}/{x}', attribution: '\u00a9 Esri, USGS, NOAA', maxZoom: 13 },
 };
 const LMAPS = {};
 function setBasemapLayer(map, style) {

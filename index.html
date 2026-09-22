@@ -456,7 +456,7 @@ const mapTLabel = () => S.mapT === 'avg' ? 'Rata-rata 7\u201321 HSA' : T[+S.mapT
 
 /* ============ basemap peta (Leaflet) ============ */
 const BASEMAPS = {
-  light: { url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', attribution: '\u00a9 OpenStreetMap \u00a9 CARTO', maxZoom: 19, subdomains: 'abcd' },
+  light: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', attribution: '\u00a9 Esri, HERE, Garmin, OpenStreetMap contributors', maxZoom: 16 },
   terrain: { url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', attribution: '\u00a9 OpenStreetMap, SRTM \u00a9 OpenTopoMap', maxZoom: 17, subdomains: 'abc' },
 };
 const LMAPS = {};
@@ -504,11 +504,19 @@ function mapGeom(W, H) {
 }
 function mapSVG(lmap, W, H) {
   const sel = new Set(filtered().map(r => r.id));
-  const g = lmap ? null : mapGeom(W, H);
-  const ox = lmap ? 8 : g.ox, oy = lmap ? 8 : g.oy, gw = lmap ? W - 16 : g.gw, gh = lmap ? H - 16 : g.gh;
-  const project = lmap
-    ? (lat, lon) => { const p = lmap.latLngToContainerPoint([lat, lon]); return { x: p.x, y: p.y }; }
-    : (lat, lon) => ({ x: g.ox + (lon - g.lon0) * g.k, y: g.oy + (g.lat1 - lat) * g.k });
+  let g;
+  if (lmap) {
+    // pakai batas lat/lon yang benar-benar tampil di peta (setelah fitBounds+zoomSnap),
+    // lalu proyeksi linear sederhana — di rentang lintang kecil ini bedanya dgn Mercator
+    // asli Leaflet praktis tak kasat mata, dan ini jauh lebih tahan dari kegagalan
+    // latLngToContainerPoint saat ukuran container belum settle di browser nyata.
+    const b = lmap.getBounds(), lat0 = b.getSouth(), lat1 = b.getNorth(), lon0 = b.getWest(), lon1 = b.getEast();
+    g = { lat0, lat1, lon0, lon1, ox: 0, oy: 0, gw: W, gh: H };
+  } else {
+    g = mapGeom(W, H);
+  }
+  const ox = g.ox, oy = g.oy, gw = g.gw, gh = g.gh;
+  const project = (lat, lon) => ({ x: g.ox + (lon - g.lon0) / (g.lon1 - g.lon0) * gw, y: g.oy + (g.lat1 - lat) / (g.lat1 - g.lat0) * gh });
   let s = svgOpen(W, H);
   if (!lmap) {
     // basemap tidak tersedia (mis. tanpa koneksi internet): pakai grid koordinat polos

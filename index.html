@@ -1435,8 +1435,9 @@ function heatSVG(recs, W, H) {
     for (let t = 0; t < 3; t++) s += `<text x="${gx + t * cw + cw / 2}" y="${top + gh + 9}" font-size="8" text-anchor="middle" fill="${MUTED}">${T[t].replace(' HSA', '')}</text>`;
   });
   s += `<text x="8" y="${top + gh + 9}" font-size="8" fill="${MUTED}">Demo (angka = HSA)</text>`;
-  const y0 = top + gh + th + 2, rh = Math.min(17, (H - y0 - 4) / recs.length);
-  recs.forEach((r, i) => {
+  const rows = recs.slice().sort((a, b) => a.id.localeCompare(b.id));
+  const y0 = top + gh + th + 2, rh = Math.min(17, (H - y0 - 4) / rows.length);
+  rows.forEach((r, i) => {
     const y = y0 + i * rh;
     s += `<text x="8" y="${y + rh / 2 + 3}" font-size="${Math.min(9.5, Math.max(7, rh * 0.62))}" fill="#1D2B44">${esc(r.id)}</text>`;
     ['umum', 'khusus', 'crop'].forEach((p, gi) => {

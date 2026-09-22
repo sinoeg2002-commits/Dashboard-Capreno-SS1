@@ -780,7 +780,7 @@ button{font-family:inherit}
 .tag{flex:none;width:46px;padding:2px 0;text-align:center;font-size:9px;font-weight:700;color:#fff;border-radius:3px}
 .tag.c{background:var(--or)}
 .tag.f{background:var(--blue)}
-.ph{position:relative;display:flex;align-items:center;justify-content:center;flex:none;width:166px;height:72px;overflow:hidden;background:#EEF2F8;border:1px dashed #B9C5D8;border-radius:4px;text-decoration:none;cursor:zoom-in}
+.ph{position:relative;display:flex;align-items:center;justify-content:center;flex:1;min-width:0;height:72px;overflow:hidden;background:#EEF2F8;border:1px dashed #B9C5D8;border-radius:4px;text-decoration:none;cursor:zoom-in}
 .ph .phi{font-size:9px;line-height:11px;text-align:center;color:#7A879C}
 .ph.none{border-style:solid;border-color:#E1E7F0;cursor:default}
 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0}
@@ -1467,15 +1467,15 @@ function commentOf(r) {
   return null;
 }
 function photoCell(r, h) {
-  const f = r.foto[h];
+  const f = r.foto[h] || { cap: null, fp: null };
   const one = (id, who, cls) => `<div class="pr"><span class="tag ${cls}">${who}</span>${id
     ? `<a class="ph" data-rid="${esc(r.id)}" data-h="${h}" href="https://drive.google.com/file/d/${id}/view" target="_blank" rel="noopener"><span class="phi">Buka foto<br>di Drive</span><img alt="" loading="lazy" src="https://drive.google.com/thumbnail?id=${id}&amp;sz=w400"></a>`
     : `<span class="ph none"><span class="phi">Tidak ada<br>foto</span></span>`}</div>`;
   return one(f.cap, 'Capreno', 'c') + one(f.fp, 'FP', 'f');
 }
-const HLABEL = { h7: '7 HSA', h14: '14 HSA', h21: '21 HSA' };
+const HLABEL = { h0: '0 HSA', h7: '7 HSA', h14: '14 HSA', h21: '21 HSA' };
 function photoModalHTML(r, h) {
-  const f = r.foto[h];
+  const f = r.foto[h] || { cap: null, fp: null };
   const col = (id, who, cls) => `<div class="pm-col"><span class="tag ${cls}">${who}</span>${id
     ? `<a class="pm-img" href="https://drive.google.com/file/d/${id}/view" target="_blank" rel="noopener"><img alt="" src="https://drive.google.com/thumbnail?id=${id}&amp;sz=w1000"></a><a class="pm-link" href="https://drive.google.com/file/d/${id}/view" target="_blank" rel="noopener">Buka foto asli di Drive</a>`
     : `<div class="pm-img none"><span>Tidak ada foto</span></div>`}</div>`;
@@ -1492,11 +1492,11 @@ function p3HTML(recs) {
   if (S.p3 >= pages) S.p3 = pages - 1;
   const rows = list.slice(S.p3 * PER_PAGE, S.p3 * PER_PAGE + PER_PAGE);
   const full = recs.filter(r => photoCount(r) === 6).length;
-  let h = `<table class="dt"><colgroup><col style="width:65px"><col style="width:125px"><col style="width:85px"><col style="width:264px"><col style="width:236px"><col style="width:236px"><col style="width:235px"></colgroup><thead><tr><th>Demo</th><th>Lokasi demo</th><th>Nama petugas</th><th>Komentar petani</th><th>Foto 7 HSA</th><th>Foto 14 HSA</th><th>Foto 21 HSA</th></tr></thead><tbody>`;
-  if (!rows.length) h += `<tr class="emp"><td colspan="7">${recs.length ? 'Tidak ada demo dengan foto lengkap pada filter ini. Matikan opsi \u201CHanya foto lengkap\u201D untuk melihat demo lain.' : 'Tidak ada demo pada filter ini.'}</td></tr>`;
+  let h = `<table class="dt"><colgroup><col style="width:65px"><col style="width:125px"><col style="width:85px"><col style="width:200px"><col style="width:193px"><col style="width:193px"><col style="width:193px"><col style="width:192px"></colgroup><thead><tr><th>Demo</th><th>Lokasi demo</th><th>Nama petugas</th><th>Komentar petani</th><th>Foto 0 HSA</th><th>Foto 7 HSA</th><th>Foto 14 HSA</th><th>Foto 21 HSA</th></tr></thead><tbody>`;
+  if (!rows.length) h += `<tr class="emp"><td colspan="8">${recs.length ? 'Tidak ada demo dengan foto lengkap pada filter ini. Matikan opsi \u201CHanya foto lengkap\u201D untuk melihat demo lain.' : 'Tidak ada demo pada filter ini.'}</td></tr>`;
   rows.forEach(r => {
     const c = commentOf(r), pf = r.pref.h21;
-    h += `<tr><td><b>${esc(r.id)}</b><div class="mut">${esc(r.petani || '')}</div></td><td>${esc(r.lokasi)}<div class="mut">${esc(r.kab)} \u00B7 ${esc(r.fp)} \u00B7 ${esc(r.var)}</div></td><td>${esc(r.petugas || '')}</td><td>${c ? `${esc(c.t)}<div class="mut">Komentar ${c.s}${pf ? ` \u00B7 plot disukai 21 HSA: ${pf === 'cap' ? 'Capreno' : 'FP'}` : ''}</div>` : '<span class="mut">Belum ada komentar</span>'}</td><td class="pc">${photoCell(r, 'h7')}</td><td class="pc">${photoCell(r, 'h14')}</td><td class="pc">${photoCell(r, 'h21')}</td></tr>`;
+    h += `<tr><td><b>${esc(r.id)}</b><div class="mut">${esc(r.petani || '')}</div></td><td>${esc(r.lokasi)}<div class="mut">${esc(r.kab)} \u00B7 ${esc(r.fp)} \u00B7 ${esc(r.var)}</div></td><td>${esc(r.petugas || '')}</td><td>${c ? `${esc(c.t)}<div class="mut">Komentar ${c.s}${pf ? ` \u00B7 plot disukai 21 HSA: ${pf === 'cap' ? 'Capreno' : 'FP'}` : ''}</div>` : '<span class="mut">Belum ada komentar</span>'}</td><td class="pc">${photoCell(r, 'h0')}</td><td class="pc">${photoCell(r, 'h7')}</td><td class="pc">${photoCell(r, 'h14')}</td><td class="pc">${photoCell(r, 'h21')}</td></tr>`;
   });
   h += `</tbody></table><div class="pager"><label><input type="checkbox" id="onlyFull" ${S.onlyFull ? 'checked' : ''}> Hanya demo dengan foto lengkap (${full} demo)</label><span class="pg"><button data-pg="-1" ${S.p3 <= 0 ? 'disabled' : ''}>\u2039 Sebelumnya</button> Halaman ${S.p3 + 1} dari ${pages} <button data-pg="1" ${S.p3 >= pages - 1 ? 'disabled' : ''}>Berikutnya \u203A</button></span><span class="mut">${list.length} demo ditampilkan</span></div>`;
   return { html: h, visible: rows, list };

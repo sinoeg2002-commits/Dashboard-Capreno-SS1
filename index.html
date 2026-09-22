@@ -82,10 +82,10 @@ button{font-family:inherit}
 .pill.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 .mlegend{display:flex;gap:6px;padding:3px 8px 0;font-size:8.5px;line-height:11px;color:#34435C;overflow:hidden;background:#fff;position:relative;z-index:2}
 .mlegend .mk{flex:none}
-.mapbase{position:absolute;inset:0;background:#EEF2F8}
+.mapbase{position:absolute;inset:0;background:#EEF2F8;z-index:1}
 .mapstatus{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;font-size:10px;color:var(--mut);background:rgba(255,255,255,.9);padding:4px 10px;border-radius:5px;pointer-events:none;white-space:nowrap;box-shadow:0 1px 4px rgba(4,32,79,.12)}
 .mapstatus.err{color:#B23A3A}
-.mapov{position:absolute;inset:0}
+.mapov{position:absolute;inset:0;z-index:3}
 .mapov svg{display:block}
 .leaflet-control-attribution{font-size:7px;padding:0 3px;background:rgba(255,255,255,.75)}
 .leaflet-bar,.leaflet-control{box-shadow:none}

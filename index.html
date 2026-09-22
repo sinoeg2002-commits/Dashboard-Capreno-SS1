@@ -83,7 +83,11 @@ button{font-family:inherit}
 .mlegend{display:flex;gap:6px;padding:3px 8px 0;font-size:8.5px;line-height:11px;color:#34435C;overflow:hidden;background:#fff;position:relative;z-index:2}
 .mlegend .mk{flex:none}
 .mapbase{position:absolute;inset:0;background:#EEF2F8;z-index:1}
-.mapstatus{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;font-size:10px;color:var(--mut);background:rgba(255,255,255,.9);padding:4px 10px;border-radius:5px;pointer-events:none;white-space:nowrap;box-shadow:0 1px 4px rgba(4,32,79,.12)}
+.mapbase.bm-light .leaflet-tile-pane{filter:grayscale(1) brightness(1.22) contrast(.88)}
+.mapbase.bm-terrain .leaflet-tile-pane{filter:saturate(.55) brightness(1.05) hue-rotate(-6deg)}
+.maptint{position:absolute;inset:0;z-index:250;pointer-events:none;background:var(--blue);opacity:.14}
+.mapbase.bm-terrain .maptint{opacity:.07}
+.mapstatus{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:260;font-size:10px;color:var(--mut);background:rgba(255,255,255,.9);padding:4px 10px;border-radius:5px;pointer-events:none;white-space:nowrap;box-shadow:0 1px 4px rgba(4,32,79,.12)}
 .mapstatus.err{color:#B23A3A}
 .mapov{position:absolute;inset:0;z-index:3}
 .mapov svg{display:block}
@@ -468,6 +472,8 @@ function setBasemapLayer(map, style) {
   const cfg = BASEMAPS[style] || BASEMAPS.light;
   const status = map._statusEl;
   if (status) { status.hidden = false; status.classList.remove('err'); status.textContent = 'Memuat peta\u2026'; }
+  map.getContainer().classList.remove('bm-light', 'bm-terrain');
+  map.getContainer().classList.add(BASEMAPS[style] ? 'bm-' + style : 'bm-light');
   const layer = L.tileLayer(cfg.url, { attribution: cfg.attribution, maxZoom: cfg.maxZoom, subdomains: cfg.subdomains });
   let loaded = 0;
   layer.on('tileload', () => { loaded++; if (status) status.hidden = true; });
@@ -486,6 +492,9 @@ function createLeafletMap(container) {
   status.textContent = 'Memuat peta\u2026';
   container.appendChild(status);
   map._statusEl = status;
+  const tint = document.createElement('div');
+  tint.className = 'maptint';
+  container.appendChild(tint);
   const lats = DATA.map(r => r.lat), lons = DATA.map(r => r.lon);
   const lat0 = Math.min(...lats) - 0.2, lat1 = Math.max(...lats) + 0.2, lon0 = Math.min(...lons) - 0.32, lon1 = Math.max(...lons) + 0.32;
   map.fitBounds([[lat0, lon0], [lat1, lon1]], { animate: false });

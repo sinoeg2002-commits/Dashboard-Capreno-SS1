@@ -970,7 +970,7 @@ function render() {
     $('p3t').innerHTML = r.html;
     $('p3ana').innerHTML = anaHTML('Analisis data', analysis3(recs, r.visible, r.list), recs.length);
   }
-  renderMaps();
+  try { renderMaps(); } catch (err) { console.error('Gagal render peta:', err); }
 }
 
 /* ============ init & events ============ */
@@ -985,7 +985,6 @@ function init() {
   // foto: tampil hanya jika berhasil dimuat; jika diblokir/gagal, placeholder tetap ada
   st.addEventListener('load', e => { if (e.target.tagName === 'IMG' && e.target.closest('.ph')) e.target.classList.add('ok'); }, true);
   st.addEventListener('error', e => { if (e.target.tagName === 'IMG' && e.target.closest('.ph')) e.target.remove(); }, true);
-  buildFilters(); fit(); render();
   window.addEventListener('resize', fit);
   st.addEventListener('mousemove', e => {
     const el = e.target.closest && e.target.closest('[data-tip]');
@@ -1027,6 +1026,11 @@ function init() {
     }
   });
   document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeDD(); closePM(); } });
+  // semua event listener sudah terpasang di atas -- baru render pertama kali di sini,
+  // dibungkus try/catch supaya error tak terduga (mis. dari basemap peta) tidak pernah
+  // sampai membatalkan pemasangan listener klik/filter di atas.
+  try { buildFilters(); fit(); render(); }
+  catch (err) { console.error('Gagal render awal:', err); try { buildFilters(); fit(); } catch (e2) { console.error(e2); } }
 }
 if (typeof document !== 'undefined' && document.getElementById('stage')) init();
 

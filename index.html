@@ -83,6 +83,8 @@ button{font-family:inherit}
 .mlegend{display:flex;gap:6px;padding:3px 8px 0;font-size:8.5px;line-height:11px;color:#34435C;overflow:hidden;background:#fff;position:relative;z-index:2}
 .mlegend .mk{flex:none}
 .mapbase{position:absolute;inset:0;background:#EEF2F8}
+.mapstatus{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:5;font-size:10px;color:var(--mut);background:rgba(255,255,255,.9);padding:4px 10px;border-radius:5px;pointer-events:none;white-space:nowrap;box-shadow:0 1px 4px rgba(4,32,79,.12)}
+.mapstatus.err{color:#B23A3A}
 .mapov{position:absolute;inset:0}
 .mapov svg{display:block}
 .leaflet-control-attribution{font-size:7px;padding:0 3px;background:rgba(255,255,255,.75)}
@@ -456,7 +458,7 @@ const mapTLabel = () => S.mapT === 'avg' ? 'Rata-rata 7\u201321 HSA' : T[+S.mapT
 
 /* ============ basemap peta (Leaflet) ============ */
 const BASEMAPS = {
-  light: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', attribution: '\u00a9 Esri, HERE, Garmin, OpenStreetMap contributors', maxZoom: 16 },
+  light: { url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '\u00a9 OpenStreetMap contributors', maxZoom: 19 },
   terrain: { url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', attribution: '\u00a9 OpenStreetMap, SRTM \u00a9 OpenTopoMap', maxZoom: 17, subdomains: 'abc' },
 };
 const LMAPS = {};
@@ -464,7 +466,14 @@ function setBasemapLayer(map, style) {
   if (!map) return;
   if (map._baseLayer) map.removeLayer(map._baseLayer);
   const cfg = BASEMAPS[style] || BASEMAPS.light;
-  map._baseLayer = L.tileLayer(cfg.url, { attribution: cfg.attribution, maxZoom: cfg.maxZoom, subdomains: cfg.subdomains }).addTo(map);
+  const status = map._statusEl;
+  if (status) { status.hidden = false; status.classList.remove('err'); status.textContent = 'Memuat peta\u2026'; }
+  const layer = L.tileLayer(cfg.url, { attribution: cfg.attribution, maxZoom: cfg.maxZoom, subdomains: cfg.subdomains });
+  let loaded = 0;
+  layer.on('tileload', () => { loaded++; if (status) status.hidden = true; });
+  layer.on('tileerror', () => { if (status && !loaded) { status.textContent = 'Peta gagal dimuat \u2014 cek koneksi internet'; status.classList.add('err'); status.hidden = false; } });
+  layer.addTo(map);
+  map._baseLayer = layer;
 }
 function createLeafletMap(container) {
   if (typeof L === 'undefined') return null;
@@ -472,6 +481,11 @@ function createLeafletMap(container) {
     zoomControl: false, dragging: false, touchZoom: false, scrollWheelZoom: false,
     doubleClickZoom: false, boxZoom: false, keyboard: false, tap: false, attributionControl: false,
   });
+  const status = document.createElement('div');
+  status.className = 'mapstatus';
+  status.textContent = 'Memuat peta\u2026';
+  container.appendChild(status);
+  map._statusEl = status;
   const lats = DATA.map(r => r.lat), lons = DATA.map(r => r.lon);
   const lat0 = Math.min(...lats) - 0.2, lat1 = Math.max(...lats) + 0.2, lon0 = Math.min(...lons) - 0.32, lon1 = Math.max(...lons) + 0.32;
   map.fitBounds([[lat0, lon0], [lat1, lon1]], { animate: false });

@@ -559,9 +559,12 @@ function wlSVG(recs, W, H, ri) {
   const rd = MATRIX_TOPICS[ri];
   let s = svgOpen(W, H);
   if (!recs.length) { s += emptyMsg(W, H, 'Tidak ada demo pada filter ini') + '</svg>'; return s; }
+  s += `<rect x="8" y="3" width="10" height="10" fill="${ORANGE}"/><text x="21" y="11.5" font-size="8.5" fill="#34435C">Capreno unggul</text>`;
+  s += `<rect x="120" y="3" width="10" height="10" fill="${BLUE}"/><text x="133" y="11.5" font-size="8.5" fill="#34435C">FP unggul</text>`;
+  s += `<text x="${W - 8}" y="11.5" font-size="8" fill="${MUTED}" text-anchor="end">angka = jumlah demo</text>`;
   const prods = uniqSorted(recs, r => r.fp), vars = uniqSorted(recs, r => r.var);
   const items = rd.p === 'crop' ? vars : prods, key = rd.p === 'crop' ? (r => r.var) : (r => r.fp);
-  const top = 14, gapX = 10;
+  const top = 24, gapX = 10;
   const cw = (W - 16 - 2 * gapX) / 3, bandH = H - top - 2;
   const rh = Math.max(9, Math.min(20, bandH / Math.max(1, items.length)));
   const labW = 58, barX = labW + 18;
@@ -590,7 +593,7 @@ function wlSVG(recs, W, H, ri) {
       }
     });
   }
-  s += `<text x="10" y="${H - 4}" font-size="7.5" fill="${MUTED}">Oranye: Capreno unggul · biru: FP unggul · angka = jumlah demo dengan produk/varietas ini.</text>`;
+  s += `<text x="10" y="${H - 4}" font-size="7.5" fill="${MUTED}">Bar: rata-rata selisih skor (WL) Capreno − FP untuk produk/varietas tsb, pada umur pengamatan yang sama.</text>`;
   return s + '</svg>';
 }
 function wlCombinedSVG(recs, W, H) {

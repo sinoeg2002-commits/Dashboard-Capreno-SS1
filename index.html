@@ -83,9 +83,9 @@ button{font-family:inherit}
 .mlegend{display:flex;gap:6px;padding:3px 8px 0;font-size:8.5px;line-height:11px;color:#34435C;overflow:hidden;background:#fff;position:relative;z-index:2}
 .mlegend .mk{flex:none}
 .mapbase{position:absolute;inset:0;background:#EEF2F8;z-index:1}
-.mapbase.bm-light .leaflet-tile-pane{filter:saturate(.8) brightness(1.06) contrast(.96)}
+.mapbase.bm-light .leaflet-tile-pane{filter:saturate(.95) brightness(1.02)}
 .mapbase.bm-terrain .leaflet-tile-pane{filter:saturate(.55) brightness(1.05) hue-rotate(-6deg)}
-.maptint{position:absolute;inset:0;z-index:250;pointer-events:none;background:var(--blue);opacity:.08}
+.maptint{position:absolute;inset:0;z-index:250;pointer-events:none;background:var(--blue);opacity:.04}
 .mapbase.bm-terrain .maptint{opacity:.07}
 .mapstatus{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:260;font-size:10px;color:var(--mut);background:rgba(255,255,255,.9);padding:4px 10px;border-radius:5px;pointer-events:none;white-space:nowrap;box-shadow:0 1px 4px rgba(4,32,79,.12)}
 .mapstatus.err{color:#B23A3A}
@@ -462,7 +462,7 @@ const mapTLabel = () => S.mapT === 'avg' ? 'Rata-rata 7\u201321 HSA' : T[+S.mapT
 
 /* ============ basemap peta (Leaflet) ============ */
 const BASEMAPS = {
-  light: { url: 'https://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', attribution: '\u00a9 Esri, HERE, Garmin, FAO, NOAA, USGS, OpenStreetMap contributors', maxZoom: 18 },
+  light: { url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '\u00a9 OpenStreetMap contributors', maxZoom: 19 },
   terrain: { url: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', attribution: '\u00a9 OpenStreetMap, SRTM \u00a9 OpenTopoMap', maxZoom: 17, subdomains: 'abc' },
 };
 const LMAPS = {};

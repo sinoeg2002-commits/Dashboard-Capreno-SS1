@@ -825,7 +825,6 @@ a.ph:hover{border-color:var(--or)}
   <span class="mb-lbl">Tampilan:</span>
   <button class="mb-btn" type="button" data-view="landscape">Landscape</button>
   <button class="mb-btn" type="button" data-view="mobile">Handphone</button>
-  <button class="mb-btn" type="button" data-view="portrait">Portrait</button>
 </div>
 <div id="vp">
 <div id="stage">
@@ -924,7 +923,7 @@ FILTERS.forEach(f => {
   f.opts = opts;
 });
 let savedView = 'landscape';
-try { const v = localStorage.getItem('capreno_view'); if (v === 'mobile' || v === 'landscape' || v === 'portrait') savedView = v; } catch (e) { }
+try { const v = localStorage.getItem('capreno_view'); if (v === 'mobile' || v === 'landscape') savedView = v; } catch (e) { }
 const S = { page: 1, sel: {}, mapT: 'avg', basemap: 'light', p3: 0, p1m: 0, p2wl: 0, onlyFull: true, dd: null, view: savedView };
 FILTERS.forEach(f => { S.sel[f.k] = new Set(f.opts.map(o => o.v)); });
 const filtered = () => DATA.filter(r => FILTERS.every(f => S.sel[f.k].has(val(r, f))));
@@ -1693,15 +1692,14 @@ function render() {
 function fit() {
   const vp = $('vp'), st = $('stage');
   const w = vp.clientWidth, h = vp.clientHeight;
-  const k = S.view === 'mobile' ? 1 : S.view === 'portrait' ? w / 1264 : Math.min(w / 1264, h / 706);
+  const k = S.view === 'mobile' ? 1 : Math.min(w / 1264, h / 706);
   st.style.zoom = k;
   S.k = k;
   Object.keys(LMAPS).forEach(id => { if (LMAPS[id]) LMAPS[id].invalidateSize(false); });
 }
 function applyView() {
-  const scroll = S.view === 'mobile' || S.view === 'portrait';
-  document.body.classList.toggle('mode-mobile', scroll);
-  $('vp').classList.toggle('scrollmode', scroll);
+  document.body.classList.toggle('mode-mobile', S.view === 'mobile');
+  $('vp').classList.toggle('scrollmode', S.view === 'mobile');
   document.querySelectorAll('#modebar [data-view]').forEach(b => b.classList.toggle('on', b.dataset.view === S.view));
   try { localStorage.setItem('capreno_view', S.view); } catch (e) { }
   fit();

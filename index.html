@@ -1632,9 +1632,29 @@ function pieSVG(opts, total, size) {
   });
   return out + '</svg>';
 }
+function timelineSVG(opts, total, W) {
+  const rowH = 27, padT = 10, padB = 8, H = padT + opts.length * rowH + padB;
+  const sx = 17, r = 5, lx = 32, cx = W - 8;
+  const firstY = padT + rowH / 2, lastY = padT + (opts.length - 1) * rowH + rowH / 2;
+  let out = `<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" font-family="inherit">`;
+  if (opts.length > 1) out += `<line x1="${sx}" y1="${firstY}" x2="${sx}" y2="${lastY}" stroke="${GREY}" stroke-width="2"/>`;
+  opts.forEach((o, i) => {
+    const y = padT + i * rowH + rowH / 2, fr = total ? o.n / total : 0, col = PIE[i % PIE.length];
+    const tip = esc(`${o.v}\n${o.n} demo (${Math.round(fr * 100)}%)`);
+    out += `<g data-tip="${tip}">`;
+    out += `<rect x="0" y="${(y - rowH / 2).toFixed(1)}" width="${W}" height="${rowH}" fill="transparent"/>`;
+    out += `<circle cx="${sx}" cy="${y.toFixed(1)}" r="${r}" fill="${col}" stroke="#fff" stroke-width="1.2"/>`;
+    out += `<text x="${lx}" y="${(y + 3.5).toFixed(1)}" font-size="10" font-weight="600" fill="#1D2B44">${esc(o.v)}</text>`;
+    out += `<text x="${cx}" y="${(y + 3.5).toFixed(1)}" font-size="9" fill="${MUTED}" text-anchor="end">${o.n} (${Math.round(fr * 100)}%)</text>`;
+    out += '</g>';
+  });
+  return out + '</svg>';
+}
 function ddHTML(f) {
   const rows = f.opts.map((o, i) => `<label class="opt"><input type="checkbox" data-i="${i}" ${S.sel[f.k].has(o.v) ? 'checked' : ''}><i class="sw" style="background:${PIE[i % PIE.length]}"></i><span class="ol" title="${esc(o.v)}">${esc(o.v)}</span><span class="on">${o.n}</span></label>`).join('');
-  return `<div class="dd-l"><div class="dd-h"><b>${esc(f.label)}</b><span><a data-a="all">Pilih semua</a><a data-a="none">Kosongkan</a></span></div><div class="dd-list">${rows}</div></div><div class="dd-r">${pieSVG(f.opts, DATA.length, 190)}<div class="cap">Komposisi total, n = ${DATA.length} demo</div></div>`;
+  const chart = f.k === 'bulan' ? timelineSVG(f.opts, DATA.length, 190) : pieSVG(f.opts, DATA.length, 190);
+  const cap = f.k === 'bulan' ? `Sebaran bulan tanam, n = ${DATA.length} demo` : `Komposisi total, n = ${DATA.length} demo`;
+  return `<div class="dd-l"><div class="dd-h"><b>${esc(f.label)}</b><span><a data-a="all">Pilih semua</a><a data-a="none">Kosongkan</a></span></div><div class="dd-list">${rows}</div></div><div class="dd-r">${chart}<div class="cap">${cap}</div></div>`;
 }
 function buildFilters() {
   $('filters').innerHTML = FILTERS.map(f => `<button class="fbtn" data-k="${f.k}"><span class="fl">${esc(f.short)}</span><span class="fc" hidden></span><svg width="9" height="6" viewBox="0 0 9 6"><path d="M1 1l3.5 3.5L8 1" stroke="currentColor" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg></button>`).join('') + '<button class="reset" id="reset">Atur ulang filter</button>';

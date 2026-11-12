@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-12T00:59:51.760133Z",
+ "generated_at": "2026-11-12T11:47:01.701Z",
  "schema_version": 4,
  "sheets": {
   "Demo SS": {
@@ -188,6 +188,12 @@
      "nomor_demo": "OKI W 01",
      "petugas": "Warma saefudin",
      "_hash": "294146fd86fcc154260dd67b5fa7169062fac3e66d460c2bb29045d6765a4676"
+    },
+    "55a111d6": {
+     "id": "55a111d6",
+     "nomor_demo": "OKUS R 04",
+     "petugas": "Roni",
+     "_hash": "df2f927568d64ed179542772f9bec70eb18459852a53699bd999868d3bb00b62"
     }
    }
   },

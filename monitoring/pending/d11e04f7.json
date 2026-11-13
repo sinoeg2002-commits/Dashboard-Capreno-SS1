@@ -1,0 +1,43 @@
+{
+  "sheet": "Demo SS",
+  "id": "d11e04f7",
+  "detected_at": "2026-11-13T20:22:05Z",
+  "fields": {
+    "petugas": "Dwi Aprianto",
+    "nomor_demo": "DA 03 Katibung (Bumi Rahayu)",
+    "id": "d11e04f7",
+    "kab": "Katibung",
+    "lokasi": "Bumi Rahayu, Kec. Tj. Selor, Kabupaten Bulungan, Kalimantan Utara, Indonesia",
+    "koordinat": "-5.520287, 105.421558",
+    "petani": "Daryanto",
+    "hp_petani": "081272456574",
+    "herbisida_fp": "Convey Complete",
+    "varietas": "Advanta Jago",
+    "olah_tanah": "Tanpa olah tanah (Sistem Cowak Lubang Tanam)",
+    "pola_tanam": "Jagung - Jagung",
+    "gulma_sulit": "Elesuine indica / lulangan , Rottboellia exaltata / branjangan",
+    "timing": "10-15",
+    "tgl_tanam": "2026-10-31T00:00:00",
+    "tgl_aplikasi": "2026-11-13T00:00:00",
+    "foto_fp_21": "uc?export=view&id=",
+    "foto_cap_21": "uc?export=view&id="
+  },
+  "new_keys": [
+    "petugas",
+    "nomor_demo",
+    "id",
+    "kab",
+    "lokasi",
+    "koordinat",
+    "petani",
+    "hp_petani",
+    "herbisida_fp",
+    "varietas",
+    "olah_tanah",
+    "pola_tanam",
+    "gulma_sulit",
+    "timing",
+    "tgl_tanam",
+    "tgl_aplikasi"
+  ]
+}

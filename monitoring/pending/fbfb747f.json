@@ -1,0 +1,43 @@
+{
+  "sheet": "Demo SS",
+  "id": "fbfb747f",
+  "detected_at": "2026-11-13T20:22:05Z",
+  "fields": {
+    "petugas": "Dwi Aprianto",
+    "nomor_demo": "DA 02 Tj. Bintang (Sinar Ogan)",
+    "id": "fbfb747f",
+    "kab": "Lampung Selatan",
+    "lokasi": "Sinar Ogan",
+    "koordinat": "-5.435337, 105.405390",
+    "petani": "Heru Prasetyo Purwito",
+    "hp_petani": "085768905846",
+    "herbisida_fp": "Cornbelt",
+    "varietas": "Nk6172 (Perkasa Sakti)",
+    "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+    "pola_tanam": "Jagung - Jagung",
+    "gulma_sulit": "Elesuine indica / lulangan , Cyperus rotundus / tekian , Rottboellia exaltata / branjangan",
+    "timing": "10-15",
+    "tgl_tanam": "2026-11-04T00:00:00",
+    "tgl_aplikasi": "2026-11-13T00:00:00",
+    "foto_fp_21": "uc?export=view&id=",
+    "foto_cap_21": "uc?export=view&id="
+  },
+  "new_keys": [
+    "petugas",
+    "nomor_demo",
+    "id",
+    "kab",
+    "lokasi",
+    "koordinat",
+    "petani",
+    "hp_petani",
+    "herbisida_fp",
+    "varietas",
+    "olah_tanah",
+    "pola_tanam",
+    "gulma_sulit",
+    "timing",
+    "tgl_tanam",
+    "tgl_aplikasi"
+  ]
+}

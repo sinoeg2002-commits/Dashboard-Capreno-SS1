@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-12T11:47:01.701Z",
+ "generated_at": "2026-11-13T20:22:05Z",
  "schema_version": 4,
  "sheets": {
   "Demo SS": {
@@ -55,9 +55,21 @@
     },
     "a8f024fc": {
      "id": "a8f024fc",
-     "nomor_demo": "DA 01 Tj. Bintang",
+     "nomor_demo": "DA 01 Tj. Bintang (Trimulyo)",
      "petugas": "Dwi Aprianto",
-     "_hash": "ccb3ca75d4a49c7c672d885dc8f93837aedbd579b51e6e56ed5d0d8c10596629"
+     "_hash": "b7b80ab174c0e1f2ea9663b00efc0e5ace5a398d3162ab94ce73e666b652e411"
+    },
+    "fbfb747f": {
+     "id": "fbfb747f",
+     "nomor_demo": "DA 02 Tj. Bintang (Sinar Ogan)",
+     "petugas": "Dwi Aprianto",
+     "_hash": "4ca6c46edcaf4da188ac0b7edfcbf12eaeaf55940640525676ff59d061e640be"
+    },
+    "d11e04f7": {
+     "id": "d11e04f7",
+     "nomor_demo": "DA 03 Katibung (Bumi Rahayu)",
+     "petugas": "Dwi Aprianto",
+     "_hash": "81f802a99161c50a57f22caf84f24b35c030465a2aa9b32b55209f37c5684285"
     }
    }
   },

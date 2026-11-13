@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <?!= include('Stylesheet'); ?>
+</head>
+<body>
+  <div id="app">
+
+    <!-- LOGIN -->
+    <div id="screen-login" class="screen">
+      <div class="login-wrap">
+        <div class="logo">Capreno<span>.</span>Demo</div>
+        <div class="tagline">Input Data Demo Komersial</div>
+        <div id="login-err"></div>
+        <form id="login-form">
+          <div class="field">
+            <label>Username (Email / User ID)</label>
+            <input type="text" id="login-username" autocomplete="username" required>
+          </div>
+          <div class="field">
+            <label>Password (PIN)</label>
+            <input type="password" id="login-password" autocomplete="current-password" required>
+          </div>
+          <button type="submit" class="btn btn-primary" id="login-submit">Masuk</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- APP SHELL (dashboard / forms render into #screen-content) -->
+    <div id="screen-app" class="screen hidden" style="padding:0;">
+      <div class="hdr">
+        <button class="logout" id="btn-logout">Keluar</button>
+        <div class="tag" id="hdr-territory">&nbsp;</div>
+        <h1 id="hdr-title">Demo Saya</h1>
+        <div class="sub" id="hdr-sub">&nbsp;</div>
+      </div>
+      <div id="screen-content" class="screen"></div>
+    </div>
+
+  </div>
+
+  <?!= include('ClientScript'); ?>
+</body>
+</html>

@@ -1,0 +1,416 @@
+<script>
+  // =====================================================================
+  // State + small promise wrapper around google.script.run
+  // =====================================================================
+  var STATE = { token: null, schema: null, demos: [], currentDemoId: null, pendingPhotos: {} };
+
+  function callServer(fnName) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    return new Promise(function (resolve, reject) {
+      var runner = google.script.run
+        .withSuccessHandler(resolve)
+        .withFailureHandler(function (err) { reject(err); });
+      runner[fnName].apply(runner, args);
+    });
+  }
+
+  function el(tag, attrs, children) {
+    var e = document.createElement(tag);
+    attrs = attrs || {};
+    Object.keys(attrs).forEach(function (k) {
+      if (k === 'class') e.className = attrs[k];
+      else if (k === 'html') e.innerHTML = attrs[k];
+      else if (k.indexOf('on') === 0) e.addEventListener(k.slice(2), attrs[k]);
+      else e.setAttribute(k, attrs[k]);
+    });
+    (children || []).forEach(function (c) { if (c) e.appendChild(c); });
+    return e;
+  }
+  function text(tag, cls, str) { return el(tag, { class: cls }, [document.createTextNode(str || '')]); }
+
+  // =====================================================================
+  // Boot
+  // =====================================================================
+  window.addEventListener('load', function () {
+    document.getElementById('login-form').addEventListener('submit', onLoginSubmit);
+    document.getElementById('btn-logout').addEventListener('click', onLogout);
+    var saved = sessionStorage.getItem('capreno_token');
+    if (saved) {
+      STATE.token = saved;
+      bootAfterLogin().catch(function () { showLogin(); });
+    }
+  });
+
+  function showLogin() {
+    sessionStorage.removeItem('capreno_token');
+    STATE.token = null;
+    document.getElementById('screen-login').classList.remove('hidden');
+    document.getElementById('screen-app').classList.add('hidden');
+  }
+
+  function onLoginSubmit(e) {
+    e.preventDefault();
+    var btn = document.getElementById('login-submit');
+    var errBox = document.getElementById('login-err');
+    errBox.innerHTML = '';
+    btn.disabled = true; btn.textContent = 'Memeriksa...';
+    var username = document.getElementById('login-username').value;
+    var password = document.getElementById('login-password').value;
+    callServer('apiLogin', username, password)
+      .then(function (res) {
+        if (res.needsTerritoryChoice) {
+          renderTerritoryChoice(username, password, res.options, errBox);
+          return;
+        }
+        STATE.token = res.token;
+        sessionStorage.setItem('capreno_token', res.token);
+        return bootAfterLogin();
+      })
+      .catch(function (err) {
+        errBox.appendChild(el('div', { class: 'err' }, [document.createTextNode(err.message || String(err))]));
+      })
+      .finally(function () { btn.disabled = false; btn.textContent = 'Masuk'; });
+  }
+
+  function renderTerritoryChoice(username, password, options, errBox) {
+    errBox.innerHTML = '';
+    errBox.appendChild(el('div', { class: 'ok' }, [document.createTextNode('Akun ini terdaftar di beberapa wilayah. Pilih wilayah yang mau dibuka:')]));
+    var wrap = el('div', { style: 'display:flex;flex-direction:column;gap:8px;margin-bottom:14px;' });
+    options.forEach(function (opt) {
+      var b = el('button', { type: 'button', class: 'btn btn-secondary' }, [document.createTextNode(opt.label)]);
+      b.addEventListener('click', function () {
+        callServer('apiLoginForTerritory', username, password, opt.territory).then(function (res) {
+          STATE.token = res.token;
+          sessionStorage.setItem('capreno_token', res.token);
+          return bootAfterLogin();
+        }).catch(function (err) {
+          errBox.innerHTML = '';
+          errBox.appendChild(el('div', { class: 'err' }, [document.createTextNode(err.message || String(err))]));
+        });
+      });
+      wrap.appendChild(b);
+    });
+    errBox.appendChild(wrap);
+  }
+
+  function onLogout() {
+    callServer('apiLogout', STATE.token).catch(function () {});
+    showLogin();
+  }
+
+  function bootAfterLogin() {
+    return callServer('apiGetSchema', STATE.token).then(function (schema) {
+      STATE.schema = schema;
+      document.getElementById('screen-login').classList.add('hidden');
+      document.getElementById('screen-app').classList.remove('hidden');
+      document.getElementById('hdr-territory').textContent = schema.territoryLabel;
+      document.getElementById('hdr-sub').textContent = schema.petugas + (schema.role === 'Admin' ? ' · Admin' : '');
+      return renderDashboard();
+    });
+  }
+
+  function fieldsBySection(sectionKey) {
+    return STATE.schema.fields.filter(function (f) { return f.section === sectionKey; });
+  }
+
+  // =====================================================================
+  // Dashboard: list of demos
+  // =====================================================================
+  function renderDashboard() {
+    document.getElementById('hdr-title').textContent = 'Demo Saya';
+    var c = document.getElementById('screen-content');
+    c.innerHTML = '';
+    c.appendChild(el('div', { class: 'spinner' }, [document.createTextNode('Memuat...')]));
+
+    return callServer('apiListMyDemos', STATE.token).then(function (demos) {
+      STATE.demos = demos;
+      c.innerHTML = '';
+
+      var addBtn = el('button', { class: 'btn btn-primary', style: 'margin-bottom:16px', onclick: function () { renderNewDemoForm(); } },
+        [document.createTextNode('+ Tambah Demo Baru')]);
+      c.appendChild(addBtn);
+
+      if (!demos.length) {
+        c.appendChild(el('div', { class: 'empty' }, [document.createTextNode('Belum ada data demo. Tap "Tambah Demo Baru" untuk mulai.')]));
+        return;
+      }
+
+      demos.forEach(function (d) {
+        var badges = el('div', { class: 'badges' }, STATE.schema.sections.map(function (sec) {
+          var done = d.status[sec.key];
+          return el('span', { class: 'badge' + (done ? ' done' : '') }, [document.createTextNode(sec.label.split('(')[0].trim())]);
+        }));
+        var card = el('div', { class: 'demo-card', onclick: function () { renderDemoDetail(d.id); } }, [
+          el('div', { class: 'nomor' }, [document.createTextNode(d.nomorDemo || '(tanpa nomor)')]),
+          el('div', { class: 'meta' }, [document.createTextNode(
+            (d.petani ? 'Petani: ' + d.petani : '') + (d.lokasi ? ' · ' + d.lokasi : '') +
+            (STATE.schema.role === 'Admin' && d.petugas ? ' · Petugas: ' + d.petugas : '')
+          )]),
+          badges
+        ]);
+        c.appendChild(card);
+      });
+    });
+  }
+
+  // =====================================================================
+  // New demo form (setup + 0HSA fields; creates the row on submit)
+  // =====================================================================
+  function renderNewDemoForm() {
+    document.getElementById('hdr-title').textContent = 'Tambah Demo Baru';
+    var c = document.getElementById('screen-content');
+    c.innerHTML = '';
+    c.appendChild(backBar('Tambah Demo Baru', renderDashboard));
+
+    STATE.pendingPhotos = {};
+    var fields = fieldsBySection('setup').concat(fieldsBySection('h0'));
+    var getValues = renderFieldsInto(c, fields, {});
+
+    var errBox = el('div', {});
+    c.appendChild(errBox);
+    var saveBtn = el('button', { class: 'btn btn-primary' }, [document.createTextNode('Simpan Demo Baru')]);
+    c.appendChild(saveBtn);
+    saveBtn.addEventListener('click', function () {
+      errBox.innerHTML = '';
+      var payload = getValues();
+      if (!payload.nomor_demo || !payload.nama_petani || !payload.lokasi_demo || !payload.tgl_aplikasi) {
+        errBox.appendChild(el('div', { class: 'err' }, [document.createTextNode('Nomor Demo, Nama Petani, Lokasi Demo, dan Tanggal Aplikasi wajib diisi.')]));
+        return;
+      }
+      saveBtn.disabled = true; saveBtn.textContent = 'Menyimpan...';
+      // Create the row FIRST so photos (if any) are named with the real id,
+      // matching the "<rowId>.<description>.<time>.jpg" convention the rest
+      // of the system (fallback photo search, reports) relies on.
+      var newId;
+      callServer('apiCreateDemo', STATE.token, payload).then(function (res) {
+        newId = res.id;
+        return resolvePendingPhotos(newId);
+      }).then(function (resolvedPhotos) {
+        if (!Object.keys(resolvedPhotos).length) return null;
+        return callServer('apiSaveSection', STATE.token, newId, 'h0', resolvedPhotos);
+      }).then(function () {
+        return renderDemoDetail(newId);
+      }).catch(function (err) {
+        errBox.innerHTML = '';
+        errBox.appendChild(el('div', { class: 'err' }, [document.createTextNode(err.message || String(err))]));
+      }).finally(function () {
+        saveBtn.disabled = false; saveBtn.textContent = 'Simpan Demo Baru';
+      });
+    });
+  }
+
+  // =====================================================================
+  // Demo detail: section chips + per-section form
+  // =====================================================================
+  function renderDemoDetail(id) {
+    STATE.currentDemoId = id;
+    document.getElementById('hdr-title').textContent = 'Detail Demo';
+    var c = document.getElementById('screen-content');
+    c.innerHTML = '';
+    c.appendChild(el('div', { class: 'spinner' }, [document.createTextNode('Memuat...')]));
+
+    return callServer('apiGetDemoDetail', STATE.token, id).then(function (detail) {
+      c.innerHTML = '';
+      c.appendChild(backBar(detail.nomor_demo || 'Detail Demo', renderDashboard));
+
+      var nav = el('div', { class: 'section-nav' }, STATE.schema.sections.map(function (sec) {
+        var hasAnyField = fieldsBySection(sec.key).some(function (f) { return detail['_available_' + f.key]; });
+        if (!hasAnyField) return null;
+        var filled = fieldsBySection(sec.key).some(function (f) { return detail[f.key] !== null && detail[f.key] !== '' && detail[f.key] !== undefined; });
+        return el('button', {
+          class: 'chip' + (filled ? ' filled' : ''),
+          onclick: function () { renderSectionEditor(id, sec.key, detail, nav, body); }
+        }, [document.createTextNode(sec.label)]);
+      }));
+      c.appendChild(nav);
+      var body = el('div', {});
+      c.appendChild(body);
+
+      renderSectionEditor(id, 'setup', detail, nav, body);
+    });
+  }
+
+  function renderSectionEditor(id, sectionKey, detail, navEl, bodyEl) {
+    Array.prototype.forEach.call(navEl.children, function (chip, i) {
+      var sec = STATE.schema.sections.filter(function (s) { return fieldsBySection(s.key).some(function (f) { return detail['_available_' + f.key]; }); })[i];
+      if (sec) chip.classList.toggle('on', sec.key === sectionKey);
+    });
+
+    bodyEl.innerHTML = '';
+    STATE.pendingPhotos = {};
+    var fields = fieldsBySection(sectionKey).filter(function (f) { return detail['_available_' + f.key]; });
+    var existing = {};
+    fields.forEach(function (f) { existing[f.key] = detail[f.key]; });
+    var getValues = renderFieldsInto(bodyEl, fields, existing);
+
+    var errBox = el('div', {});
+    bodyEl.appendChild(errBox);
+    var saveBtn = el('button', { class: 'btn btn-primary' }, [document.createTextNode('Simpan')]);
+    bodyEl.appendChild(saveBtn);
+    saveBtn.addEventListener('click', function () {
+      errBox.innerHTML = '';
+      var payload = getValues();
+      saveBtn.disabled = true; saveBtn.textContent = 'Menyimpan...';
+      resolvePendingPhotos(id).then(function (resolved) {
+        Object.assign(payload, resolved);
+        return callServer('apiSaveSection', STATE.token, id, sectionKey, payload);
+      }).then(function () {
+        errBox.innerHTML = '';
+        errBox.appendChild(el('div', { class: 'ok' }, [document.createTextNode('Tersimpan.')]));
+      }).catch(function (err) {
+        errBox.innerHTML = '';
+        errBox.appendChild(el('div', { class: 'err' }, [document.createTextNode(err.message || String(err))]));
+      }).finally(function () {
+        saveBtn.disabled = false; saveBtn.textContent = 'Simpan';
+      });
+    });
+  }
+
+  function backBar(title, onBack) {
+    return el('div', { class: 'topbar' }, [
+      el('button', { class: 'back', onclick: onBack }, [document.createTextNode('←')]),
+      el('div', { class: 'title' }, [document.createTextNode(title)])
+    ]);
+  }
+
+  // =====================================================================
+  // Generic field rendering. Returns a getValues() function that reads the
+  // current DOM state back into a {key: value} payload (photo fields return
+  // either the untouched marker -- omitted entirely -- or are resolved
+  // separately via resolvePendingPhotos before submit).
+  // =====================================================================
+  function renderFieldsInto(container, fields, existingValues) {
+    var inputs = {}; // key -> {type, getValue}
+    fields.forEach(function (f) {
+      var wrap = el('div', { class: 'field' });
+      var labelText = f.label + (f.required ? ' *' : '');
+      wrap.appendChild(el('label', {}, [document.createTextNode(labelText)]));
+
+      var existing = existingValues[f.key];
+
+      if (f.type === 'score') {
+        var row = el('div', { class: 'score-row' });
+        var selected = existing || null;
+        [1, 2, 3, 4].forEach(function (n) {
+          var b = el('button', { type: 'button', class: 'score-btn' + (String(selected) === String(n) ? ' on' : '') },
+            [document.createTextNode(String(n))]);
+          b.addEventListener('click', function () {
+            selected = n;
+            Array.prototype.forEach.call(row.children, function (c) { c.classList.remove('on'); });
+            b.classList.add('on');
+          });
+          row.appendChild(b);
+        });
+        wrap.appendChild(row);
+        inputs[f.key] = { getValue: function () { return selected; } };
+
+      } else if (f.type === 'select') {
+        var sel = el('select', {});
+        sel.appendChild(el('option', { value: '' }, [document.createTextNode('— pilih —')]));
+        (f.options || []).forEach(function (opt) {
+          var o = el('option', { value: opt }, [document.createTextNode(opt)]);
+          if (existing === opt) o.selected = true;
+          sel.appendChild(o);
+        });
+        wrap.appendChild(sel);
+        inputs[f.key] = { getValue: function () { return sel.value; } };
+
+      } else if (f.type === 'textarea') {
+        var ta = el('textarea', {});
+        if (existing) ta.value = existing;
+        wrap.appendChild(ta);
+        inputs[f.key] = { getValue: function () { return ta.value; } };
+
+      } else if (f.type === 'number') {
+        var ni = el('input', { type: 'number', step: 'any' });
+        if (existing !== null && existing !== undefined) ni.value = existing;
+        wrap.appendChild(ni);
+        inputs[f.key] = { getValue: function () { return ni.value === '' ? null : ni.value; } };
+
+      } else if (f.type === 'date') {
+        var di = el('input', { type: 'date' });
+        if (existing) di.value = existing;
+        wrap.appendChild(di);
+        inputs[f.key] = { getValue: function () { return di.value || null; } };
+
+      } else if (f.type === 'coords') {
+        var ci = el('input', { type: 'text', placeholder: 'lat, lon' });
+        if (existing) ci.value = existing;
+        wrap.appendChild(ci);
+        var gpsBtn = el('button', { type: 'button', class: 'btn-link' }, [document.createTextNode('📍 Pakai Lokasi Saya')]);
+        gpsBtn.addEventListener('click', function () {
+          if (!navigator.geolocation) return;
+          gpsBtn.textContent = 'Mencari lokasi...';
+          navigator.geolocation.getCurrentPosition(function (pos) {
+            ci.value = pos.coords.latitude.toFixed(6) + ', ' + pos.coords.longitude.toFixed(6);
+            gpsBtn.textContent = '📍 Pakai Lokasi Saya';
+          }, function () { gpsBtn.textContent = '📍 Pakai Lokasi Saya (gagal)'; });
+        });
+        wrap.appendChild(gpsBtn);
+        inputs[f.key] = { getValue: function () { return ci.value || null; } };
+
+      } else if (f.type === 'photo') {
+        var pf = el('div', { class: 'photo-field' });
+        var statusLine = el('div', { class: 'status' }, [document.createTextNode(existing ? 'Foto sudah ada — pilih file baru untuk mengganti.' : 'Belum ada foto.')]);
+        if (existing) {
+          var img = el('img', { src: 'https://drive.google.com/thumbnail?id=' + existing + '&sz=w400' });
+          pf.appendChild(img);
+        }
+        var fileInput = el('input', { type: 'file', accept: 'image/*', capture: 'environment' });
+        pf.appendChild(fileInput);
+        pf.appendChild(statusLine);
+        var touched = false;
+        fileInput.addEventListener('change', function () {
+          var file = fileInput.files[0];
+          if (!file) return;
+          touched = true;
+          var reader = new FileReader();
+          reader.onload = function () {
+            var dataUrl = reader.result; // "data:image/jpeg;base64,...."
+            var base64 = dataUrl.split(',')[1];
+            STATE.pendingPhotos[f.key] = { base64: base64, mimeType: file.type, description: f.label.replace(/[^a-zA-Z0-9 ]/g, '') };
+            statusLine.textContent = 'Foto baru dipilih, akan diupload saat Simpan.';
+          };
+          reader.readAsDataURL(file);
+        });
+        wrap.appendChild(pf);
+        inputs[f.key] = { photo: true, touchedRef: function () { return touched; } };
+
+      } else { // text
+        var ti = el('input', { type: 'text' });
+        if (existing) ti.value = existing;
+        wrap.appendChild(ti);
+        inputs[f.key] = { getValue: function () { return ti.value; } };
+      }
+
+      container.appendChild(wrap);
+    });
+
+    return function getValues() {
+      var out = {};
+      Object.keys(inputs).forEach(function (key) {
+        var i = inputs[key];
+        if (i.photo) return; // handled via resolvePendingPhotos, merged in separately
+        var v = i.getValue();
+        if (v !== null && v !== undefined && v !== '') out[key] = v;
+      });
+      return out;
+    };
+  }
+
+  /** Upload any newly-picked photos for the current form, return {key: fileId}. */
+  function resolvePendingPhotos(rowIdForNaming) {
+    var keys = Object.keys(STATE.pendingPhotos);
+    if (!keys.length) return Promise.resolve({});
+    var out = {};
+    var chain = Promise.resolve();
+    keys.forEach(function (key) {
+      chain = chain.then(function () {
+        var p = STATE.pendingPhotos[key];
+        return callServer('apiUploadPhoto', STATE.token, String(rowIdForNaming), p.description, p.base64, p.mimeType)
+          .then(function (res) { out[key] = res.fileId; });
+      });
+    });
+    return chain.then(function () { return out; });
+  }
+</script>

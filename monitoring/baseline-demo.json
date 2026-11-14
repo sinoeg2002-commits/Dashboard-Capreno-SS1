@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-13T20:22:05Z",
+ "generated_at": "2026-11-14T20:21:11Z",
  "schema_version": 4,
  "sheets": {
   "Demo SS": {
@@ -229,6 +229,12 @@
      "nomor_demo": "01",
      "petugas": "Della",
      "_hash": "fc0284a14b32c42b9a345fe7d9d7f8612e2de7b7477d4e1a7aeb815ebe0f1376"
+    },
+    "bed83bf1": {
+     "id": "bed83bf1",
+     "nomor_demo": "02",
+     "petugas": "Della",
+     "_hash": "8542f759acf14f6ff5b43f20b5796631b2e15630c7a3ad40e3a1ddc7ccd7f231"
     }
    }
   },

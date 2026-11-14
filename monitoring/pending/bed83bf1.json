@@ -1,0 +1,41 @@
+{
+  "sheet": "Demo SS2",
+  "id": "bed83bf1",
+  "detected_at": "2026-11-14T20:21:11Z",
+  "fields": {
+    "petugas": "Della",
+    "nomor_demo": "02",
+    "id": "bed83bf1",
+    "lokasi": "Jl. Raya Manukan Wetan No.68-68 A, Manukan Wetan, Jawa Timur, Surabaya, Jawa Timur 60185, Indonesia",
+    "koordinat": "-4.915962, 105.099328",
+    "petani": "Suroto",
+    "hp_petani": "085973680315",
+    "herbisida_fp": "Macerio",
+    "varietas": "Bisi Macho",
+    "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+    "pola_tanam": "Jagung- Kencur",
+    "gulma_sulit": "Elesuine indica / lulangan , Cyperus rotundus / tekian",
+    "timing": "10-15",
+    "tgl_tanam": "2026-10-31T00:00:00",
+    "tgl_aplikasi": "2026-11-14T00:00:00",
+    "foto_fp_7": "uc?export=view&id=",
+    "foto_cap_7": "uc?export=view&id="
+  },
+  "new_keys": [
+    "petugas",
+    "nomor_demo",
+    "id",
+    "lokasi",
+    "koordinat",
+    "petani",
+    "hp_petani",
+    "herbisida_fp",
+    "varietas",
+    "olah_tanah",
+    "pola_tanam",
+    "gulma_sulit",
+    "timing",
+    "tgl_tanam",
+    "tgl_aplikasi"
+  ]
+}

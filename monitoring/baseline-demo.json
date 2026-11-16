@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-14T20:21:11Z",
+ "generated_at": "2026-11-16T20:25:42Z",
  "schema_version": 4,
  "sheets": {
   "Demo SS": {
@@ -70,6 +70,18 @@
      "nomor_demo": "DA 03 Katibung (Bumi Rahayu)",
      "petugas": "Dwi Aprianto",
      "_hash": "81f802a99161c50a57f22caf84f24b35c030465a2aa9b32b55209f37c5684285"
+    },
+    "8aad14c0": {
+     "id": "8aad14c0",
+     "nomor_demo": "DA 03 Negeri Katon (Sidomulyo)",
+     "petugas": "Dwi Aprianto",
+     "_hash": "ba7dc5e01d5070efdf1a64a59890cc788c89895e5743498837557bcdcbd46d4e"
+    },
+    "14fd8215": {
+     "id": "14fd8215",
+     "nomor_demo": "DA 05 Trirahayu",
+     "petugas": "Dwi Aprianto",
+     "_hash": "6bd9a1277b810163bd0fd318267d5a185506c368c2c540fab46a72095ef7f741"
     }
    }
   },
@@ -80,7 +92,7 @@
      "id": "d6a3aed9",
      "nomor_demo": "Banyuasin R 06",
      "petugas": "Ristono",
-     "_hash": "ea6733712999cc021b799745c6cc4a1de400c81df35b724e454642f850da40b6"
+     "_hash": "013fd9ede44a4a6a1f91da17451f06e4a250a19e31d80c4bbb9becb7f0cad204"
     },
     "d96134e2": {
      "id": "d96134e2",
@@ -110,13 +122,13 @@
      "id": "f731b0c1",
      "nomor_demo": "Banyuasin C 02",
      "petugas": "Cahyo",
-     "_hash": "e9202b08d3c6a50c6f8aaf53fd79514e0bdcefa4907106784880aefaa124cb8c"
+     "_hash": "2a2ecd3830672c1329f1e94bb4bead6a501ecb95df7f80da69f336b43a9f010a"
     },
     "e0a126f3": {
      "id": "e0a126f3",
      "nomor_demo": "Banyuasin D 01",
      "petugas": "Didik Setiawan",
-     "_hash": "5e0c29ae91ab68778f20753fc25057fb3bcad5d597878149dbf4de9ab8e923cf"
+     "_hash": "e02733a81cd8cf6a52949fb7c2e47597ab52e08d229907f918bc47e2a973a1b2"
     },
     "e8cb974f": {
      "id": "e8cb974f",
@@ -226,15 +238,15 @@
     },
     "bfce7aa3": {
      "id": "bfce7aa3",
-     "nomor_demo": "01",
+     "nomor_demo": "Lamteng D 01",
      "petugas": "Della",
-     "_hash": "fc0284a14b32c42b9a345fe7d9d7f8612e2de7b7477d4e1a7aeb815ebe0f1376"
+     "_hash": "da32fe4337e1b3cd2af33ed6d3c6314c178be7bd1a8f846514c9888d7a3c12a7"
     },
     "bed83bf1": {
      "id": "bed83bf1",
-     "nomor_demo": "02",
+     "nomor_demo": "Lamteng D 02",
      "petugas": "Della",
-     "_hash": "8542f759acf14f6ff5b43f20b5796631b2e15630c7a3ad40e3a1ddc7ccd7f231"
+     "_hash": "90ca64d599b82178c86c09734ae2f39ab00c25ce77ec53fcfe8bdcca70f56f6c"
     }
    }
   },
@@ -535,117 +547,121 @@
      "id": "726875f5",
      "nomor_demo": "Maros 01",
      "petugas": "Nizam",
-     "_hash": "69e084ea8b66e2299b09ce2875baa718befaeb79f4d0a0c9ee02d0dcd166397f"
+     "_hash": "fcc8595b3a2aa2af1acb752701bbdff0d9bf1ebd3d32219adcd9ce0354ee6998"
     },
     "1666c0ae": {
      "id": "1666c0ae",
      "nomor_demo": "Maros02",
      "petugas": "Nizam",
-     "_hash": "45b66ea9bfc35efdb80db2c3770f3aac361df0ede8b5c71c82c36a7bf8f57fa3"
+     "_hash": "89eaacc276b19d467e3cf4febf547dd8adc19742cc46a7653812c87bb47a2dd9"
     },
     "bfcded4d": {
      "id": "bfcded4d",
      "nomor_demo": "Bantaeng 01",
      "petugas": "Arjuna",
-     "_hash": "5f0d19310532142cd5a0472ac8b818d1fe92a8256b18d23ceb400fb37aa9e366"
+     "_hash": "b123a311eb06bc4430b10c2db5281e6cc3d013b0b9e062d8d76be47cde022d85"
     },
     "686785ff": {
      "id": "686785ff",
      "nomor_demo": "Bantaeng 02",
      "petugas": "Arjuna",
-     "_hash": "186c852f0b7f18e6ae5d1d9c2a0baa7bae57885d5c22bb5b3f59edeb7130832b"
+     "_hash": "a85dcfff4543a9a5eb438f918382b8c4d0673ebdaa647943d39e3b8c72c6f341"
     },
     "2ad7cf11": {
      "id": "2ad7cf11",
      "nomor_demo": "Bone-01",
      "petugas": "Yayang",
-     "_hash": "377178a94e7a196167daf4af4b22fd1aa226d356741e991ecbf721b14c159c69"
+     "_hash": "eb9719ad1729b633a12df81f2cc8a84cae46c4db72ba83b666c7280e67ee6ecd"
     },
     "7925a626": {
      "id": "7925a626",
      "nomor_demo": "01",
      "petugas": "Wayan Adi",
-     "_hash": "e30947034d7a9083e6029f801d43d0f923a79f2aed9b708477f9f8ea752f7a04"
+     "_hash": "8fc9ecc50b335b255ba3e670cd4ae04c780c4d4d5fe1eb10271de56b70843ee4"
     },
     "c77db060": {
      "id": "c77db060",
+     "nomor_demo": null,
      "petugas": "Yayang",
-     "_hash": "8ca3337429a203151c8c071f2f3004299f93e73e3d1de1ba25daac423337c2b2"
+     "_hash": "287c1b21d87e522a0a939d9463606b4671fccb38814ed5a26ef5519498340aaf"
     },
     "318a97a7": {
      "id": "318a97a7",
+     "nomor_demo": null,
      "petugas": "Yayang",
-     "_hash": "d331ef2aab61d3d854dfce8080a272f6ff5e25aa26beae686b11d981a7040255"
+     "_hash": "32528084b52a1a71818c834c01ecbc3661d980db6b06763f1337cfe7f844f5d9"
     },
     "39b2f8f1": {
      "id": "39b2f8f1",
+     "nomor_demo": null,
      "petugas": "Yayang",
-     "_hash": "55444959d176d09c34c97179afb37223b2733ff8bba650117cce29d11d2f4f38"
+     "_hash": "8a2f6a19d5a0c04c421c383211508bb1bd36c5c77369c929da7d474fb2c7fbfa"
     },
     "4e55baff": {
      "id": "4e55baff",
      "nomor_demo": "02",
      "petugas": "Wayan Adi",
-     "_hash": "4d178898d0937feb5257b29fb4bfa07809b3a831e8fab6514aa3769e2d8ff9ec"
+     "_hash": "401c69e8d3bff61fe43219acb59f1ca9bd6e61cf1e12a7f8f4a55936b6202dbc"
     },
     "52c20e0c": {
      "id": "52c20e0c",
+     "nomor_demo": null,
      "petugas": "Yayang",
-     "_hash": "81bf1d1510130159d4b23a15db0056480769b3dc4b48caf93eceb0d4388bfabf"
+     "_hash": "3acfa3a8c676098c18744b987e60f5e91f08fd5a32f5bd6c27802eaaedff9ae2"
     },
     "4beff4bb": {
      "id": "4beff4bb",
      "nomor_demo": "Wajo 01",
      "petugas": "Risman",
-     "_hash": "45a08ab9a85fcf60e46c10488d45474a9286a589c9f379cdefaec5d9b9090fee"
+     "_hash": "c8ae5cf3a09d76038a4e668f9f38a6f6f0e902dad6017c8626157aa154089d08"
     },
     "70e1996e": {
      "id": "70e1996e",
      "nomor_demo": "Wajo 02",
      "petugas": "Risman",
-     "_hash": "24b24c87603a6b997961ba1962e8e10b3c759af24424bbba7b2843bfd4ac131b"
+     "_hash": "0902fba92d3bff517ba847f2b8afbab81cbacfe07a5f69f5e1bffbe7a80e6631"
     },
     "3e5bb627": {
      "id": "3e5bb627",
      "nomor_demo": "Luwu Utara 01",
      "petugas": "Irham",
-     "_hash": "a92063bdc06ebce905a785b531ba4b56a13f4f56e1bde1134eef2f487a3fd0d1"
+     "_hash": "34735f57796eb96a1f7049dca43bec683102183f79789c00b7a62a092affc4d2"
     },
     "e95c12ba": {
      "id": "e95c12ba",
      "nomor_demo": "Luwu Utara 02",
      "petugas": "Irham",
-     "_hash": "da220b92588b5d423144308dbf48bc38f572111db8047031731d20b4c221a033"
+     "_hash": "2123223ef608716c1806ad719f3acfaadbbde2f96e0de1cfbdcb6474389f0828"
     },
     "7b24eea3": {
      "id": "7b24eea3",
      "nomor_demo": "Wajo 03",
      "petugas": "Risman",
-     "_hash": "ee02fe59baf59005d572af70ee77d56651b3c36f5a48b60c85727d03812a119e"
+     "_hash": "b5c3940ee37305eca078fc97383c053933e4977e4178810d712217727755fc3d"
     },
     "a3bc48b8": {
      "id": "a3bc48b8",
      "nomor_demo": "PEG22090606-LUWU UTARA-IRHAM-03",
      "petugas": "Irham",
-     "_hash": "759622b7fcfe13635101dedbb9bb2c7c1cfccc08e35283ba4fd18310f0fbe7c4"
+     "_hash": "796c063f72a2817f746dc75baad334446e64887dfc3454d99b7f510c28b65f24"
     },
     "efccb8bb": {
      "id": "efccb8bb",
      "nomor_demo": "Takalar 1",
      "petugas": "Resky",
-     "_hash": "a2b1994fd0ba48230b12d1dac6b19e9d2a2bdf81769f941e842b7149478b30de"
+     "_hash": "72ff9bf4edc94c6b33f66b6b29db3d6fc5b2ba62d5b63893e6f561e0ab3f8e7e"
     },
     "dee8ae7d": {
      "id": "dee8ae7d",
      "nomor_demo": "Gowa 1",
      "petugas": "Resky",
-     "_hash": "d9bb07998dbf942fa8197a0f513b46828ee3523d9d7a7883c9c00524acbf80b9"
+     "_hash": "1d444e57403d1676f2416717a139a323c0bbc7bfa6fbdda4bcae57ec640bff4f"
     },
     "3eaa350e": {
      "id": "3eaa350e",
      "nomor_demo": "03",
      "petugas": "Wayan Adi",
-     "_hash": "90378b65f8046bc0b5ccf453a5f26807307bd3abd458848e4e677a41678796df"
+     "_hash": "aec93a15821ecf3eaf3da2586e0548759e3f81dc31433bf9e627df31b297c0f6"
     }
    }
   },

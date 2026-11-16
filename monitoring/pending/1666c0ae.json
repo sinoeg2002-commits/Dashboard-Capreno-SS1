@@ -1,0 +1,42 @@
+{
+ "sheet": "Demo SUL",
+ "id": "1666c0ae",
+ "detected_at": "2026-11-16T20:25:42Z",
+ "fields": {
+  "petugas": "Nizam",
+  "nomor_demo": "Maros02",
+  "id": "1666c0ae",
+  "lokasi": "Tompobulu",
+  "petani": "Syarifuddin",
+  "hp_petani": "085256484060",
+  "herbisida_fp": "PAG",
+  "varietas": "Bisi 18",
+  "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+  "pola_tanam": "Jagung - Jagung",
+  "gulma_sulit": "Elesuine indica / lulangan",
+  "timing": "16-20",
+  "tgl_tanam": "2026-02-28T00:00:00",
+  "tgl_aplikasi": "2026-03-18T00:00:00",
+  "fp_7_umum": "2",
+  "fp_7_khusus": "1",
+  "fp_7_performa": "3",
+  "cap_7_umum": "3",
+  "cap_7_khusus": "3",
+  "cap_7_performa": "4",
+  "disukai_7": "Plot Capreno",
+  "alasan_7": "Capreno dapat mengatasi gulma yang selama ini sulit di kendalika oleh PAG",
+  "foto_fp_14": "thumbnail?id=",
+  "foto_cap_14": "thumbnail?id=",
+  "foto_cap_21": "thumbnail?id="
+ },
+ "new_keys": [
+  "fp_7_umum",
+  "fp_7_khusus",
+  "fp_7_performa",
+  "cap_7_umum",
+  "cap_7_khusus",
+  "cap_7_performa",
+  "disukai_7",
+  "alasan_7"
+ ]
+}

@@ -1,0 +1,39 @@
+{
+ "sheet": "Demo SS",
+ "id": "8aad14c0",
+ "detected_at": "2026-11-16T20:25:42Z",
+ "fields": {
+  "petugas": "Dwi Aprianto",
+  "nomor_demo": "DA 03 Negeri Katon (Sidomulyo)",
+  "id": "8aad14c0",
+  "lokasi": "Sidomulyo",
+  "petani": "Ahmad Badroni",
+  "hp_petani": "085267976700",
+  "herbisida_fp": "Cornelia",
+  "varietas": "Advanta Jago",
+  "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+  "pola_tanam": "Jagung - Singkong",
+  "gulma_sulit": "Elesuine indica / lulangan , Rottboellia exaltata / branjangan",
+  "timing": "10-15",
+  "tgl_tanam": "2026-10-30T00:00:00",
+  "tgl_aplikasi": "2026-11-16T00:00:00",
+  "foto_fp_21": "uc?export=view&id=",
+  "foto_cap_21": "uc?export=view&id="
+ },
+ "new_keys": [
+  "petugas",
+  "nomor_demo",
+  "id",
+  "lokasi",
+  "petani",
+  "hp_petani",
+  "herbisida_fp",
+  "varietas",
+  "olah_tanah",
+  "pola_tanam",
+  "gulma_sulit",
+  "timing",
+  "tgl_tanam",
+  "tgl_aplikasi"
+ ]
+}

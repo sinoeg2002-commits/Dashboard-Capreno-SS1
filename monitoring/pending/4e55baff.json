@@ -1,0 +1,43 @@
+{
+ "sheet": "Demo SUL",
+ "id": "4e55baff",
+ "detected_at": "2026-11-16T20:25:42Z",
+ "fields": {
+  "petugas": "Wayan Adi",
+  "nomor_demo": "02",
+  "id": "4e55baff",
+  "lokasi": "Desa Bolano Utara",
+  "koordinat": "0.482615, 120.944712",
+  "petani": "Devayana",
+  "hp_petani": "085248406452",
+  "herbisida_fp": "Algojo",
+  "varietas": "NK7328s (Sumo sakti)",
+  "olah_tanah": "Tanpa olah tanah (menggunakan herbisida non selektif untuk land clearing)",
+  "pola_tanam": "Padi - Jagung",
+  "gulma_sulit": "Elesuine indica / lulangan , Cyperus rotundus / tekian , Cynodon dactylon / grinting , Rottboellia exaltata / branjangan , Cabe cabean",
+  "timing": "21-30",
+  "tgl_tanam": "2026-07-23T00:00:00",
+  "tgl_aplikasi": "2026-08-15T00:00:00",
+  "fp_7_umum": "2",
+  "fp_7_khusus": "2",
+  "fp_7_performa": "2",
+  "cap_7_umum": "3",
+  "cap_7_khusus": "3",
+  "cap_7_performa": "3",
+  "disukai_7": "Plot Capreno",
+  "alasan_7": "Layu gulma ditandai dengan kekuningan sudah terlihat dibandingkan Farmers praktise",
+  "foto_fp_14": "thumbnail?id=",
+  "foto_cap_14": "thumbnail?id=",
+  "foto_cap_21": "thumbnail?id="
+ },
+ "new_keys": [
+  "fp_7_umum",
+  "fp_7_khusus",
+  "fp_7_performa",
+  "cap_7_umum",
+  "cap_7_khusus",
+  "cap_7_performa",
+  "disukai_7",
+  "alasan_7"
+ ]
+}

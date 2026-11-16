@@ -1,0 +1,43 @@
+{
+ "sheet": "Demo SUL",
+ "id": "efccb8bb",
+ "detected_at": "2026-11-16T20:25:42Z",
+ "fields": {
+  "petugas": "Resky",
+  "nomor_demo": "Takalar 1",
+  "id": "efccb8bb",
+  "lokasi": "Sanrobone, Takalar Regency, South Sulawesi, Indonesia",
+  "koordinat": "-5.428395, 119.398082",
+  "petani": "Pak Hasan",
+  "hp_petani": "081525835898",
+  "herbisida_fp": "Kayabas",
+  "varietas": "Garuda",
+  "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+  "pola_tanam": "Padi - Jagung",
+  "gulma_sulit": "Elesuine indica / lulangan",
+  "timing": "16-20",
+  "tgl_tanam": "2026-07-24T00:00:00",
+  "tgl_aplikasi": "2026-08-13T00:00:00",
+  "fp_7_umum": "1",
+  "fp_7_khusus": "1",
+  "fp_7_performa": "1",
+  "cap_7_umum": "3",
+  "cap_7_khusus": "2",
+  "cap_7_performa": "2",
+  "disukai_7": "Plot Capreno",
+  "alasan_7": "gulma lebih terkendalikan",
+  "foto_fp_14": "thumbnail?id=",
+  "foto_cap_14": "thumbnail?id=",
+  "foto_cap_21": "thumbnail?id="
+ },
+ "new_keys": [
+  "fp_7_umum",
+  "fp_7_khusus",
+  "fp_7_performa",
+  "cap_7_umum",
+  "cap_7_khusus",
+  "cap_7_performa",
+  "disukai_7",
+  "alasan_7"
+ ]
+}

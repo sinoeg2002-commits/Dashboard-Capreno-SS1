@@ -1,0 +1,43 @@
+{
+ "sheet": "Demo SUL",
+ "id": "3eaa350e",
+ "detected_at": "2026-11-16T20:25:42Z",
+ "fields": {
+  "petugas": "Wayan Adi",
+  "nomor_demo": "03",
+  "id": "3eaa350e",
+  "lokasi": "Desa Petunasugi",
+  "koordinat": "0.513682, 120.941669",
+  "petani": "Nyoman Arjana",
+  "hp_petani": "085345495581",
+  "herbisida_fp": "Atradex",
+  "varietas": "NK7328s (Sumo sakti)",
+  "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+  "pola_tanam": "Padi - Jagung",
+  "gulma_sulit": "Elesuine indica / lulangan , Cyperus rotundus / tekian , Cynodon dactylon / grinting , Rottboellia exaltata / branjangan , Cabe cabean",
+  "timing": "10-15",
+  "tgl_tanam": "2026-09-04T00:00:00",
+  "tgl_aplikasi": "2026-09-19T00:00:00",
+  "fp_7_umum": "3",
+  "fp_7_khusus": "3",
+  "fp_7_performa": "4",
+  "cap_7_umum": "4",
+  "cap_7_khusus": "3",
+  "cap_7_performa": "2",
+  "disukai_7": "Plot FP",
+  "alasan_7": "Karena plot farmer praktis menunjukkan performa tanaman yang lebih baik",
+  "foto_fp_14": "thumbnail?id=",
+  "foto_cap_14": "thumbnail?id=",
+  "foto_cap_21": "thumbnail?id="
+ },
+ "new_keys": [
+  "fp_7_umum",
+  "fp_7_khusus",
+  "fp_7_performa",
+  "cap_7_umum",
+  "cap_7_khusus",
+  "cap_7_performa",
+  "disukai_7",
+  "alasan_7"
+ ]
+}

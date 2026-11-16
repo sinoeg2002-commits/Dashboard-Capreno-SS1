@@ -1,0 +1,25 @@
+{
+ "sheet": "Demo SUL",
+ "id": "7b24eea3",
+ "detected_at": "2026-11-16T20:25:42Z",
+ "fields": {
+  "petugas": "Risman",
+  "nomor_demo": "Wajo 03",
+  "id": "7b24eea3",
+  "lokasi": "Bila, Sabbang Paru, Kabupaten Wajo, Sulawesi Selatan, Indonesia",
+  "koordinat": "-4.230009, 119.957087",
+  "petani": "Ardi",
+  "hp_petani": "085221487074",
+  "varietas": "NK212 (Wiro Sableng)",
+  "olah_tanah": "Tanpa olah tanah (menggunakan herbisida non selektif untuk land clearing)",
+  "pola_tanam": "Padi - Jagung",
+  "gulma_sulit": "Cyperus rotundus / tekian",
+  "timing": "10-15",
+  "tgl_tanam": "2026-08-12T00:00:00",
+  "tgl_aplikasi": "2026-08-20T00:00:00",
+  "foto_fp_14": "thumbnail?id=",
+  "foto_cap_14": "thumbnail?id=",
+  "foto_cap_21": "thumbnail?id="
+ },
+ "new_keys": []
+}

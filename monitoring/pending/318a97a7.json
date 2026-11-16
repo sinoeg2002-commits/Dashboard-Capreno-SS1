@@ -1,0 +1,27 @@
+{
+ "sheet": "Demo SUL",
+ "id": "318a97a7",
+ "detected_at": "2026-11-16T20:25:42Z",
+ "fields": {
+  "petugas": "Yayang",
+  "id": "318a97a7",
+  "timing": "10-15",
+  "fp_7_umum": "2",
+  "fp_7_khusus": "2",
+  "fp_7_performa": "4",
+  "cap_7_umum": "2",
+  "cap_7_khusus": "2",
+  "cap_7_performa": "4",
+  "foto_fp_14": "thumbnail?id=",
+  "foto_cap_14": "thumbnail?id=",
+  "foto_cap_21": "thumbnail?id="
+ },
+ "new_keys": [
+  "fp_7_umum",
+  "fp_7_khusus",
+  "fp_7_performa",
+  "cap_7_umum",
+  "cap_7_khusus",
+  "cap_7_performa"
+ ]
+}

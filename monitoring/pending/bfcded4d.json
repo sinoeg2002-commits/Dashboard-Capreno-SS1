@@ -1,0 +1,43 @@
+{
+ "sheet": "Demo SUL",
+ "id": "bfcded4d",
+ "detected_at": "2026-11-16T20:25:42Z",
+ "fields": {
+  "petugas": "Arjuna",
+  "nomor_demo": "Bantaeng 01",
+  "id": "bfcded4d",
+  "lokasi": "Kec. Kelara, Kabupaten Jeneponto, Sulawesi Selatan, Indonesia",
+  "koordinat": "-5.587427, 119.873317",
+  "petani": "Saepul",
+  "hp_petani": "085143621702",
+  "herbisida_fp": "Calaris",
+  "varietas": "NK7328 (Sumo)",
+  "olah_tanah": "Tanpa olah tanah (menggunakan herbisida non selektif untuk land clearing)",
+  "pola_tanam": "Jagung - Jagung",
+  "gulma_sulit": "Cyperus rotundus / tekian",
+  "timing": "16-20",
+  "tgl_tanam": "2026-03-14T00:00:00",
+  "tgl_aplikasi": "2026-03-30T00:00:00",
+  "fp_7_umum": "3",
+  "fp_7_khusus": "2",
+  "fp_7_performa": "3",
+  "cap_7_umum": "3",
+  "cap_7_khusus": "3",
+  "cap_7_performa": "4",
+  "disukai_7": "Plot Capreno",
+  "alasan_7": "Mampu membasmi gulma yang sulit dikendalikan",
+  "foto_fp_14": "thumbnail?id=",
+  "foto_cap_14": "thumbnail?id=",
+  "foto_cap_21": "thumbnail?id="
+ },
+ "new_keys": [
+  "fp_7_umum",
+  "fp_7_khusus",
+  "fp_7_performa",
+  "cap_7_umum",
+  "cap_7_khusus",
+  "cap_7_performa",
+  "disukai_7",
+  "alasan_7"
+ ]
+}

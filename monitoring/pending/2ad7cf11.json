@@ -1,0 +1,41 @@
+{
+ "sheet": "Demo SUL",
+ "id": "2ad7cf11",
+ "detected_at": "2026-11-16T20:25:42Z",
+ "fields": {
+  "petugas": "Yayang",
+  "nomor_demo": "Bone-01",
+  "id": "2ad7cf11",
+  "lokasi": "Unra",
+  "koordinat": "-4.543164, 120.320136",
+  "petani": "Wahyudi",
+  "hp_petani": "082188981323",
+  "herbisida_fp": "PAG",
+  "varietas": "Raja",
+  "olah_tanah": "Tanpa olah tanah (menggunakan herbisida non selektif untuk land clearing)",
+  "pola_tanam": "Jagung - Jagung",
+  "gulma_sulit": "Elesuine indica / lulangan",
+  "timing": "21-30",
+  "tgl_tanam": "2026-04-07T00:00:00",
+  "tgl_aplikasi": "2026-05-04T00:00:00",
+  "fp_7_umum": "2",
+  "fp_7_khusus": "2",
+  "fp_7_performa": "2",
+  "cap_7_umum": "2",
+  "cap_7_khusus": "2",
+  "cap_7_performa": "2",
+  "alasan_7": "80% membunuh semua gulma",
+  "foto_fp_14": "thumbnail?id=",
+  "foto_cap_14": "thumbnail?id=",
+  "foto_cap_21": "thumbnail?id="
+ },
+ "new_keys": [
+  "fp_7_umum",
+  "fp_7_khusus",
+  "fp_7_performa",
+  "cap_7_umum",
+  "cap_7_khusus",
+  "cap_7_performa",
+  "alasan_7"
+ ]
+}

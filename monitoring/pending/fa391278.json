@@ -1,0 +1,37 @@
+{
+  "sheet": "Demo SS",
+  "id": "fa391278",
+  "detected_at": "2026-11-20T20:21:10Z",
+  "fields": {
+    "petugas": "Anto Suwanto",
+    "nomor_demo": "LamSel- SS- AS- 01",
+    "id": "fa391278",
+    "lokasi": "Sumber Sari, Kec. Sragi, Kabupaten Lampung Selatan, Lampung, Indonesia",
+    "petani": "Mukaji",
+    "hp_petani": "085268053002",
+    "varietas": "NK7328 (Sumo)",
+    "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+    "pola_tanam": "Jagung - Jagung",
+    "gulma_sulit": "Elesuine indica / lulangan , Cyperus rotundus / tekian",
+    "timing": "10-15",
+    "tgl_tanam": "2026-11-02T00:00:00",
+    "tgl_aplikasi": "2026-11-20T00:00:00",
+    "foto_fp_21": "uc?export=view&id=",
+    "foto_cap_21": "uc?export=view&id="
+  },
+  "new_keys": [
+    "petugas",
+    "nomor_demo",
+    "id",
+    "lokasi",
+    "petani",
+    "hp_petani",
+    "varietas",
+    "olah_tanah",
+    "pola_tanam",
+    "gulma_sulit",
+    "timing",
+    "tgl_tanam",
+    "tgl_aplikasi"
+  ]
+}

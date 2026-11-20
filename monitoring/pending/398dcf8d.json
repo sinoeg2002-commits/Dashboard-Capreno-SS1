@@ -1,0 +1,39 @@
+{
+  "sheet": "Demo SS",
+  "id": "398dcf8d",
+  "detected_at": "2026-11-20T20:21:10Z",
+  "fields": {
+    "petugas": "Dwi Aprianto",
+    "nomor_demo": "DA 06 Jati Agung",
+    "id": "398dcf8d",
+    "koordinat": "-5.299627, 105.390737",
+    "petani": "Sunar",
+    "hp_petani": "085267816550",
+    "herbisida_fp": "Nikko (Asterindo)",
+    "varietas": "Advanta Jago",
+    "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+    "pola_tanam": "Jagung - Jagung",
+    "gulma_sulit": "Elesuine indica / lulangan , Cyperus rotundus / tekian , Cynodon dactylon / grinting",
+    "timing": "10-15",
+    "tgl_tanam": "2026-11-06T00:00:00",
+    "tgl_aplikasi": "2026-11-18T00:00:00",
+    "foto_fp_21": "uc?export=view&id=",
+    "foto_cap_21": "uc?export=view&id="
+  },
+  "new_keys": [
+    "petugas",
+    "nomor_demo",
+    "id",
+    "koordinat",
+    "petani",
+    "hp_petani",
+    "herbisida_fp",
+    "varietas",
+    "olah_tanah",
+    "pola_tanam",
+    "gulma_sulit",
+    "timing",
+    "tgl_tanam",
+    "tgl_aplikasi"
+  ]
+}

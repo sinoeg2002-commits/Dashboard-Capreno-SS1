@@ -1,0 +1,35 @@
+{
+  "sheet": "Demo SS",
+  "id": "4e03451c",
+  "detected_at": "2026-11-20T20:21:10Z",
+  "fields": {
+    "petugas": "Lutfi Fauzi",
+    "nomor_demo": "01",
+    "id": "4e03451c",
+    "lokasi": "Margo Jaya, Kec. Metro Kibang, Kabupaten Lampung Timur, Lampung, Indonesia",
+    "koordinat": "-5.220076, 105.332963",
+    "petani": "Paijo",
+    "herbisida_fp": "Convey",
+    "varietas": "NK7328 (Sumo)",
+    "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+    "pola_tanam": "Jagung - Jagung",
+    "gulma_sulit": "Rottboellia exaltata / branjangan",
+    "timing": ">30",
+    "foto_fp_21": "uc?export=view&id=",
+    "foto_cap_21": "uc?export=view&id="
+  },
+  "new_keys": [
+    "petugas",
+    "nomor_demo",
+    "id",
+    "lokasi",
+    "koordinat",
+    "petani",
+    "herbisida_fp",
+    "varietas",
+    "olah_tanah",
+    "pola_tanam",
+    "gulma_sulit",
+    "timing"
+  ]
+}

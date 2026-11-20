@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-16T20:25:42Z",
+ "generated_at": "2026-11-20T20:24:00Z",
  "schema_version": 4,
  "sheets": {
   "Demo SS": {
@@ -63,13 +63,13 @@
      "id": "fbfb747f",
      "nomor_demo": "DA 02 Tj. Bintang (Sinar Ogan)",
      "petugas": "Dwi Aprianto",
-     "_hash": "4ca6c46edcaf4da188ac0b7edfcbf12eaeaf55940640525676ff59d061e640be"
+     "_hash": "e6bf8bf91f1e75156603599a5d05b358fc81f1efed0fac192f336e3c16a61c01"
     },
     "d11e04f7": {
      "id": "d11e04f7",
      "nomor_demo": "DA 03 Katibung (Bumi Rahayu)",
      "petugas": "Dwi Aprianto",
-     "_hash": "81f802a99161c50a57f22caf84f24b35c030465a2aa9b32b55209f37c5684285"
+     "_hash": "6558fb826cb2c9bc343523a238a4e042f774233855be5f9fb9460acb112c5049"
     },
     "8aad14c0": {
      "id": "8aad14c0",
@@ -82,6 +82,30 @@
      "nomor_demo": "DA 05 Trirahayu",
      "petugas": "Dwi Aprianto",
      "_hash": "6bd9a1277b810163bd0fd318267d5a185506c368c2c540fab46a72095ef7f741"
+    },
+    "4e03451c": {
+     "id": "4e03451c",
+     "nomor_demo": "01",
+     "petugas": "Lutfi Fauzi",
+     "_hash": "cf40302d7e41657d5af691d882ec7920e3a8ea56845f3becdc9abbd95a751d5c"
+    },
+    "398dcf8d": {
+     "id": "398dcf8d",
+     "nomor_demo": "DA 06 Jati Agung",
+     "petugas": "Dwi Aprianto",
+     "_hash": "c6cb0a2f8af2ba753929ae96765811d1a2efba5d544036d224735610638c4083"
+    },
+    "6728f052": {
+     "id": "6728f052",
+     "nomor_demo": "DA 07 Jati Agung (Gedung Agung)",
+     "petugas": "Dwi Aprianto",
+     "_hash": "6531c74787d1de5ac7a7baf346f313cc7f328fd5c10bc97362510daf75961fd7"
+    },
+    "fa391278": {
+     "id": "fa391278",
+     "nomor_demo": "LamSel- SS- AS- 01",
+     "petugas": "Anto Suwanto",
+     "_hash": "7821ccacb2d00ff00346398317591fcddff5d00d1b2fc95072fc848fbec02e59"
     }
    }
   },

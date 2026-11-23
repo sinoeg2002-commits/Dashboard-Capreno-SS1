@@ -1,0 +1,41 @@
+{
+  "sheet": "Demo SS",
+  "id": "d747612f",
+  "detected_at": "2026-11-23T20:25:00Z",
+  "fields": {
+    "petugas": "Lutfi Fauzi",
+    "nomor_demo": "02",
+    "id": "d747612f",
+    "lokasi": "Jaya Asri, Kec. Metro Kibang, Kabupaten Lampung Timur, Lampung, Indonesia",
+    "koordinat": "-5.223429, 105.338310",
+    "petani": "Dedi Firmansyah",
+    "hp_petani": "#ERROR!",
+    "herbisida_fp": "Macerio",
+    "varietas": "NK7328 (Sumo)",
+    "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+    "pola_tanam": "Jagung - Jagung",
+    "gulma_sulit": "Elesuine indica / lulangan",
+    "timing": "10-15",
+    "tgl_tanam": "2026-11-05T00:00:00",
+    "tgl_aplikasi": "2026-11-23T00:00:00",
+    "foto_fp_21": "uc?export=view&id=",
+    "foto_cap_21": "uc?export=view&id="
+  },
+  "new_keys": [
+    "petugas",
+    "nomor_demo",
+    "id",
+    "lokasi",
+    "koordinat",
+    "petani",
+    "hp_petani",
+    "herbisida_fp",
+    "varietas",
+    "olah_tanah",
+    "pola_tanam",
+    "gulma_sulit",
+    "timing",
+    "tgl_tanam",
+    "tgl_aplikasi"
+  ]
+}

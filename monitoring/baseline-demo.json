@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-20T20:24:00Z",
+ "generated_at": "2026-11-23T20:30:00Z",
  "schema_version": 4,
  "sheets": {
   "Demo SS": {
@@ -75,13 +75,13 @@
      "id": "8aad14c0",
      "nomor_demo": "DA 03 Negeri Katon (Sidomulyo)",
      "petugas": "Dwi Aprianto",
-     "_hash": "ba7dc5e01d5070efdf1a64a59890cc788c89895e5743498837557bcdcbd46d4e"
+     "_hash": "ac3d806849cef1aa2b43b2eb214ec3d5f873299168f335a4d21436b5a139a9e7"
     },
     "14fd8215": {
      "id": "14fd8215",
      "nomor_demo": "DA 05 Trirahayu",
      "petugas": "Dwi Aprianto",
-     "_hash": "6bd9a1277b810163bd0fd318267d5a185506c368c2c540fab46a72095ef7f741"
+     "_hash": "3d04ea2560938f3182ab4fe63cff9f733b36fabb1dfa4d0cbb94a3eac4439165"
     },
     "4e03451c": {
      "id": "4e03451c",
@@ -106,6 +106,12 @@
      "nomor_demo": "LamSel- SS- AS- 01",
      "petugas": "Anto Suwanto",
      "_hash": "7821ccacb2d00ff00346398317591fcddff5d00d1b2fc95072fc848fbec02e59"
+    },
+    "d747612f": {
+     "id": "d747612f",
+     "nomor_demo": "02",
+     "petugas": "Lutfi Fauzi",
+     "_hash": "9f4d55574beccb5b1254fb3e3666dbac3793d6df04562da179bc38f3e96d684b"
     }
    }
   },
@@ -264,7 +270,7 @@
      "id": "bfce7aa3",
      "nomor_demo": "Lamteng D 01",
      "petugas": "Della",
-     "_hash": "da32fe4337e1b3cd2af33ed6d3c6314c178be7bd1a8f846514c9888d7a3c12a7"
+     "_hash": "d10060651dea356fa69a2243a0912bec88116b8c8649e738d45ea1962c1405c9"
     },
     "bed83bf1": {
      "id": "bed83bf1",

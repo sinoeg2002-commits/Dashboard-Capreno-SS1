@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-23T20:30:00Z",
+ "generated_at": "2026-11-24T20:22:04Z",
  "schema_version": 4,
  "sheets": {
   "Demo SS": {
@@ -93,13 +93,13 @@
      "id": "398dcf8d",
      "nomor_demo": "DA 06 Jati Agung",
      "petugas": "Dwi Aprianto",
-     "_hash": "c6cb0a2f8af2ba753929ae96765811d1a2efba5d544036d224735610638c4083"
+     "_hash": "75e5b09f7f5c17a6d00ffb9bf24a282a52df18116265e853ae58a6fddd7f6647"
     },
     "6728f052": {
      "id": "6728f052",
      "nomor_demo": "DA 07 Jati Agung (Gedung Agung)",
      "petugas": "Dwi Aprianto",
-     "_hash": "6531c74787d1de5ac7a7baf346f313cc7f328fd5c10bc97362510daf75961fd7"
+     "_hash": "6b45e9a934134603b44ae544d405ae004228de5179b0b54c86e7b52c2a7fcb2e"
     },
     "fa391278": {
      "id": "fa391278",
@@ -277,6 +277,30 @@
      "nomor_demo": "Lamteng D 02",
      "petugas": "Della",
      "_hash": "90ca64d599b82178c86c09734ae2f39ab00c25ce77ec53fcfe8bdcca70f56f6c"
+    },
+    "8a5d99b4": {
+     "id": "8a5d99b4",
+     "nomor_demo": "OKU R 01",
+     "petugas": "Rio Junaidi",
+     "_hash": "93664e44a8c392039ed2bd6f96401fc577fecb706fce04065bb1dfc4930b8eae"
+    },
+    "8fefb8e9": {
+     "id": "8fefb8e9",
+     "nomor_demo": "OKU R 02",
+     "petugas": "Rio Junaidi",
+     "_hash": "2199375427675d4913b428252b5d389b1dc36aa798eaebfc1ef0465a7fd8e83d"
+    },
+    "abeda7ab": {
+     "id": "abeda7ab",
+     "nomor_demo": "OKU R 03",
+     "petugas": "Rio Junaidi",
+     "_hash": "72ee9eac48002627acff497f1363e327ea98af643bf19cfdba858fc155ef5c46"
+    },
+    "d96ac196": {
+     "id": "d96ac196",
+     "nomor_demo": "",
+     "petugas": "",
+     "_hash": "fdf7a66aa7070da303b980fe8a88e7b8351bbaaa8ac6790e1f41f0d5a0613421"
     }
    }
   },

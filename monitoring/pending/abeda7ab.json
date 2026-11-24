@@ -1,0 +1,35 @@
+{
+  "sheet": "Demo SS2",
+  "id": "abeda7ab",
+  "detected_at": "2026-11-24T20:22:04Z",
+  "fields": {
+    "petugas": "Rio Junaidi",
+    "nomor_demo": "OKU R 03",
+    "id": "abeda7ab",
+    "lokasi": "Desa margodadi Kec. Semendawai suku 3 kab. OKU timur",
+    "petani": "Norman",
+    "hp_petani": "082189378352",
+    "herbisida_fp": "Kayabas",
+    "varietas": "NK7328 (Sumo)",
+    "olah_tanah": "Olah tanah sempurna (menggunakan traktor)",
+    "pola_tanam": "Padi - Jagung",
+    "gulma_sulit": "Elesuine indica / lulangan , Cyperus rotundus / tekian , Cynodon dactylon / grinting",
+    "timing": ">30",
+    "foto_fp_7": "uc?export=view&id=",
+    "foto_cap_7": "uc?export=view&id="
+  },
+  "new_keys": [
+    "petugas",
+    "nomor_demo",
+    "id",
+    "lokasi",
+    "petani",
+    "hp_petani",
+    "herbisida_fp",
+    "varietas",
+    "olah_tanah",
+    "pola_tanam",
+    "gulma_sulit",
+    "timing"
+  ]
+}

@@ -1,7 +1,7 @@
 {
   "sheet": "Demo SS",
   "id": "6728f052",
-  "detected_at": "2026-11-20T20:21:10Z",
+  "detected_at": "2026-11-24T20:22:04Z",
   "fields": {
     "petugas": "Dwi Aprianto",
     "nomor_demo": "DA 07 Jati Agung (Gedung Agung)",
@@ -17,23 +17,25 @@
     "timing": "10-15",
     "tgl_tanam": "2026-11-05T00:00:00",
     "tgl_aplikasi": "2026-11-18T00:00:00",
+    "fp_7_umum": "2",
+    "fp_7_khusus": "2",
+    "fp_7_performa": "3",
+    "cap_7_umum": "3",
+    "cap_7_khusus": "3",
+    "cap_7_performa": "3",
+    "disukai_7": "Plot Capreno",
+    "alasan_7": "Efikasi gulma lebih bersih",
     "foto_fp_21": "uc?export=view&id=",
     "foto_cap_21": "uc?export=view&id="
   },
   "new_keys": [
-    "petugas",
-    "nomor_demo",
-    "id",
-    "koordinat",
-    "petani",
-    "hp_petani",
-    "herbisida_fp",
-    "varietas",
-    "olah_tanah",
-    "pola_tanam",
-    "gulma_sulit",
-    "timing",
-    "tgl_tanam",
-    "tgl_aplikasi"
+    "fp_7_umum",
+    "fp_7_khusus",
+    "fp_7_performa",
+    "cap_7_umum",
+    "cap_7_khusus",
+    "cap_7_performa",
+    "disukai_7",
+    "alasan_7"
   ]
 }

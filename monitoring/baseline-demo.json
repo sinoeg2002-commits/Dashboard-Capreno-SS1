@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-24T20:22:04Z",
+ "generated_at": "2026-11-25T20:24:11Z",
  "schema_version": 4,
  "sheets": {
   "Demo SS": {
@@ -112,6 +112,18 @@
      "nomor_demo": "02",
      "petugas": "Lutfi Fauzi",
      "_hash": "9f4d55574beccb5b1254fb3e3666dbac3793d6df04562da179bc38f3e96d684b"
+    },
+    "3f3d97e3": {
+     "id": "3f3d97e3",
+     "nomor_demo": "HENDRIK - 01",
+     "petugas": "Hendrik Putra Remaja",
+     "_hash": "364e6f3420236720528fe96c45b709b133d659ab9beda50c1c2cf83270fd7e92"
+    },
+    "a0fb6f58": {
+     "id": "a0fb6f58",
+     "nomor_demo": "Hendrik, 02",
+     "petugas": "Hendrik Putra Remaja",
+     "_hash": "d3bf17c59e2a1ffd79d19307cfe496b376088b3ebc159c4b1c953a70711dc2cb"
     }
    }
   },
@@ -276,13 +288,13 @@
      "id": "bed83bf1",
      "nomor_demo": "Lamteng D 02",
      "petugas": "Della",
-     "_hash": "90ca64d599b82178c86c09734ae2f39ab00c25ce77ec53fcfe8bdcca70f56f6c"
+     "_hash": "e07ce1c7e8d2eacd1005f089505d930deffe3ec8725b51c3109810a63cf2cb3f"
     },
     "8a5d99b4": {
      "id": "8a5d99b4",
      "nomor_demo": "OKU R 01",
      "petugas": "Rio Junaidi",
-     "_hash": "93664e44a8c392039ed2bd6f96401fc577fecb706fce04065bb1dfc4930b8eae"
+     "_hash": "d98a320ee49b7445af573d291aedc3fc290bfa7eb2133df36cb18e956f2b2ad7"
     },
     "8fefb8e9": {
      "id": "8fefb8e9",
@@ -301,6 +313,12 @@
      "nomor_demo": "",
      "petugas": "",
      "_hash": "fdf7a66aa7070da303b980fe8a88e7b8351bbaaa8ac6790e1f41f0d5a0613421"
+    },
+    "059b2311": {
+     "id": "059b2311",
+     "nomor_demo": "Lamteng D 03",
+     "petugas": "Della",
+     "_hash": "d4f2a127bbcbbd2563cb87db713a78630c11b2a29deaa0f68fe903af1bf67c66"
     }
    }
   },

@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-11-25T20:24:11Z",
+ "generated_at": "2026-11-27T20:21:54Z",
  "schema_version": 4,
  "sheets": {
   "Demo SS": {
@@ -105,7 +105,7 @@
      "id": "fa391278",
      "nomor_demo": "LamSel- SS- AS- 01",
      "petugas": "Anto Suwanto",
-     "_hash": "7821ccacb2d00ff00346398317591fcddff5d00d1b2fc95072fc848fbec02e59"
+     "_hash": "16c4162665e787454876c286767152823d6d5d7e8baee770d081315b1f11df23"
     },
     "d747612f": {
      "id": "d747612f",
@@ -734,6 +734,12 @@
      "nomor_demo": "03",
      "petugas": "Wayan Adi",
      "_hash": "aec93a15821ecf3eaf3da2586e0548759e3f81dc31433bf9e627df31b297c0f6"
+    },
+    "d713dfdf": {
+     "id": "d713dfdf",
+     "nomor_demo": "Bantaeng 03",
+     "petugas": "Arjuna",
+     "_hash": "a2cc541d1c993d5464537d02183df875ab7aa90e0604434554205b7588c37d87"
     }
    }
   },

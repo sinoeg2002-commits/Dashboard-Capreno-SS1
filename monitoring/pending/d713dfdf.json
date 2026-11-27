@@ -1,0 +1,26 @@
+{
+ "sheet": "Demo SUL",
+ "id": "d713dfdf",
+ "detected_at": "2026-11-27T20:21:54Z",
+ "fields": {
+  "petugas": "Arjuna",
+  "nomor_demo": "Bantaeng 03",
+  "id": "d713dfdf",
+  "lokasi": "Bontorannu, Kec. Mariso, Kota Makassar, Sulawesi Selatan, Indonesia",
+  "koordinat": "-5.519138, 119.886910",
+  "petani": "Sultan",
+  "hp_petani": "081935668055",
+  "herbisida_fp": "Calaris",
+  "varietas": "NK7328 (Sumo)",
+  "olah_tanah": "Tanpa olah tanah (menggunakan herbisida non selektif untuk land clearing)",
+  "pola_tanam": "Jagung - Jagung",
+  "gulma_sulit": "Elesuine indica / lulangan , Cyperus rotundus / tekian , Rottboellia exaltata / branjangan",
+  "timing": "16-20",
+  "tgl_tanam": "2026-11-08T00:00:00",
+  "tgl_aplikasi": "2026-11-27T00:00:00",
+  "foto_fp_14": "thumbnail?id=",
+  "foto_cap_14": "thumbnail?id=",
+  "foto_cap_21": "thumbnail?id="
+ },
+ "new_keys": ["petugas", "nomor_demo", "id", "lokasi", "koordinat", "petani", "hp_petani", "herbisida_fp", "varietas", "olah_tanah", "pola_tanam", "gulma_sulit", "timing", "tgl_tanam", "tgl_aplikasi"]
+}
